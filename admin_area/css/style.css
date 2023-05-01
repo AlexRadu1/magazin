@@ -1,0 +1,386 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,700;1,400;1,700&family=Roboto+Condensed:ital@1&family=Roboto:wght@700&display=swap");
+
+html {
+  height: 100%;
+  box-sizing: border-box;
+  font-family: "Roboto Condensed", sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+}
+
+/* HEADER */
+
+header {
+  display: flex;
+  background-color: rgb(30, 30, 35);
+  height: 10vh;
+  align-items: center;
+  justify-content: space-between;
+}
+header h1 {
+  color: aliceblue;
+}
+.logo {
+  width: 100px;
+  height: 100px;
+}
+
+/* MAIN */
+
+.width {
+  width: 100%;
+}
+
+.message {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 15px 10px;
+  background-color: #5a5a5a;
+  text-align: center;
+  z-index: 1000;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.wrapper {
+  display: flex;
+  min-height: 90vh;
+}
+
+.sidebar {
+  background-color: darkgrey;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px 20px;
+  min-width: 10%;
+  max-width: 150px;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  flex-grow: 1;
+  overflow-y: scroll;
+  padding: 12px 15px;
+}
+
+.buttons-container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 12px;
+  gap: 5px;
+}
+
+.buttons {
+  background-color: #008cba;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.buttons:hover {
+  background-color: cyan;
+}
+
+.danger {
+  background-color: red;
+}
+.danger:hover {
+  background-color: #5a5a5a;
+}
+
+/* factura_box */
+
+#factura_box {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+/* FORM */
+
+textarea {
+  font-size: 1.5rem;
+}
+
+select,
+option,
+input,
+label,
+.search_form button {
+  padding: 0.2rem 1rem;
+  font-size: 1.1rem;
+  width: 100%;
+}
+
+.form-box {
+  padding: 0.5rem 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-box label {
+  display: none;
+}
+
+@media all and (min-width: 500px) {
+  .form-box label {
+    display: block;
+  }
+}
+
+@media all and (min-width: 600px) {
+  .form-box {
+    flex-direction: row;
+  }
+  .form-box label {
+    flex-basis: 9rem;
+    flex-grow: 0;
+    flex-shrink: 0;
+  }
+  .form-box .buttons {
+    margin-left: 9rem;
+  }
+  .form-box input,
+  .form-box select,
+  .form-box textarea {
+    flex: 1, 1, 0;
+  }
+}
+
+/* ORDERS */
+
+.orders-wrapper {
+  width: 100%;
+}
+
+.search-wrapper {
+  padding: 12px 0;
+}
+
+.search_form {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+#checkbox-search {
+  padding: 12px 15px;
+}
+
+#table_field {
+  border-collapse: collapse;
+  width: 100%;
+  border-radius: 5px 5px 0 0;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+#table_field thead tr {
+  background-color: #008cba;
+  text-align: left;
+  font-weight: bold;
+}
+
+#table_field tbody tr td img {
+  height: 80px;
+}
+
+#table_field th,
+#table_field td {
+  padding: 12px 15px;
+}
+#table_field tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.total {
+  text-align: end;
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: 200ms ease-in-out;
+  border: 1px solid black;
+  border-radius: 10px;
+  z-index: 10;
+  background-color: white;
+  width: 700px;
+  max-width: 80%;
+}
+.modal.active {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.modal-header {
+  padding: 10px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid black;
+}
+
+.modal-header .title {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.modal-header .close-btn {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  font-size: 1.25rem;
+  font-weight: 700;
+  background: none;
+}
+
+.modal-body {
+  padding: 10px 15px;
+}
+
+#overlay {
+  position: fixed;
+  opacity: 0;
+  top: 0;
+  transition: 200ms ease-in-out;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+}
+
+#overlay.active {
+  pointer-events: all;
+  opacity: 1;
+}
+
+/* SHOW MORE TABLE */
+
+.modal-body .table-row {
+  display: flex;
+  max-width: fit-content;
+}
+
+.modal-body .table-cell {
+  height: 100px;
+  max-height: 100px;
+  width: 250px;
+  max-width: 250px;
+  padding: 1em;
+  border: 1px solid black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-body .table-cell img {
+  object-fit: fill;
+}
+
+.modal-body .table-row:nth-child(even) {
+  background: lightblue;
+}
+
+/* ORDER DETAILS */
+
+.order-detail-header {
+  padding: 12px 15px;
+  width: 100%;
+  margin: 12px 30px;
+  overflow: auto;
+  background-color: #008cba;
+  font-size: 2rem;
+}
+
+.table-container {
+  width: 100%;
+}
+
+.info {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+
+/* PRODUCT FORM */
+.prod-form-wrapper {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+.product-form {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.product-form .form-group {
+  display: flex;
+  gap: 5px;
+}
+.submit-group {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5px;
+}
+.submit-group input {
+  width: 100%;
+}
+
+.product-form .form-group .group-row {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.product-form .form-group .group-row.add-image {
+  justify-content: flex-start;
+}
+
+#product_attr_box {
+  flex-direction: column;
+}
+
+#product_attr_box .group-col {
+  display: flex;
+  gap: 5px;
+  width: 100%;
+}
+
+#product_attr_box .group-row-atr {
+  display: flex;
+  gap: 5px;
+}
+
+#product_attr_box .group-row-atr .col {
+  display: flex;
+  flex-direction: column;
+}
+.add-more-stoc {
+  display: flex;
+  justify-content: space-between;
+}
