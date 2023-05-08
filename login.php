@@ -47,6 +47,11 @@ if (isset($_POST['submit'])) {
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="assets/fontawesome-free-6.4.0-web/css/all.css">
+  <link rel="stylesheet" href="assets/fontawesome-free-6.4.0-web/css/all.min.css">
+  <script src="assets/fontawesome-free-6.4.0-web/js/all.js"></script>
+  <script src="assets/fontawesome-free-6.4.0-web/js/all.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
   <title>Login</title>
 </head>
 
