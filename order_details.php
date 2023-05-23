@@ -6,7 +6,7 @@ if (isset($_SESSION['user_logged_in'])) {
 }
 if (isset($_GET['id_comanda'])) {
   $id_comanda = $_GET['id_comanda'];
-  $result_comanda_q = mysqli_query($con, "SELECT *,cs.denumire AS nume_stat,j.denumire AS nume_judet FROM comenzi c
+  $result_comanda_q = mysqli_query($con, "SELECT *,cs.denumire AS nume_stat,cs.ID AS status_id,j.denumire AS nume_judet FROM comenzi c
   INNER JOIN clienti cl ON c.cod_client=cl.ID
   INNER JOIN judete j on cl.cod_judet=j.ID
   INNER JOIN comenzi_status cs ON cs.ID=c.cod_status
@@ -14,7 +14,16 @@ if (isset($_GET['id_comanda'])) {
   $client_info = mysqli_fetch_assoc($result_comanda_q);
 }
 
-
+if (isset($_GET['action']) && $_GET['action'] == 1) {
+  $comanda = mysqli_query($con, "SELECT *,c.cantitate AS cantitate_produs FROM comenzi_detalii c 
+  INNER JOIN atribute_produs a ON c.cod_atribut_produs=a.ID
+  WHERE cod_comanda=$id_comanda");
+  while ($row_c = mysqli_fetch_assoc($comanda)) {
+    mysqli_query($con, "UPDATE atribute_produs SET cantitate=cantitate+{$row_c['cantitate_produs']} WHERE ID={$row_c['cod_atribut_produs']}");
+  }
+  mysqli_query($con, "UPDATE comenzi SET cod_status=4 WHERE ID=$id_comanda");
+  header("location:order_details.php?id_comanda=$id_comanda");
+}
 
 ?>
 <!DOCTYPE html>
@@ -62,8 +71,8 @@ if (isset($_GET['id_comanda'])) {
             ?>
               <tr>
                 <td><?= $row['produs_ID'] ?></td>
-                <td><img src="images/<?= $row['produs_imagine1'] ?>" alt=""></td>
-                <td><?= $row['denumire'] ?></td>
+                <td><img src="admin_area/images/<?= $row['produs_imagine1'] ?>" alt=""></td>
+                <td><a href="product_details.php?product_id=<?= $row['cod_produs'] ?>"><?= $row['denumire'] ?></a> </td>
                 <td><?= $row['marime_denumire'] ?></td>
                 <td><?= $row['culoare_denumire'] ?></td>
                 <td><?= $row['pret_produs'] ?></td>
@@ -93,8 +102,10 @@ if (isset($_GET['id_comanda'])) {
         </div>
         <div class="shipping-info">
           <span><strong>Status comanda:</strong><?= $client_info['nume_stat'] ?> </span>
-
         </div>
+        <?php if (!($client_info['status_id'] == 4 || $client_info['status_id'] == 5)) : ?>
+          <a href="order_details?id_comanda=<?= $id_comanda ?>&action=1">Anuleaza comanda</a>
+        <?php endif; ?>
       </div>
     </div>
   </div>

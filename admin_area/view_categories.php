@@ -1,6 +1,9 @@
 <?php
 include("../includes/connect.php");
-
+session_start();
+if (!isset($_SESSION['admin']) && !$_SESSION['admin']) {
+  header("location:../index.php");
+}
 if (isset($_GET['remove']) && $_GET['remove'] != '') {
   $remove_id = $_GET['remove'];
   mysqli_query($con, "DELETE FROM categorii WHERE ID=$remove_id");

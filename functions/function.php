@@ -1,62 +1,6 @@
 <?php
 include('./includes/connect.php');
 
-// function get_products()
-// {
-//   global $con;
-//   if (!isset($_GET['category'])) {
-//     if (!isset($_GET['subcategory'])) {
-//       $select_query = "SELECT * FROM `produse` ORDER BY ID DESC";
-//       $result_query = mysqli_query($con, $select_query);
-//       while ($row = mysqli_fetch_assoc($result_query)) {
-//         $product_id = $row['ID'];
-//         $product_title = $row['denumire'];
-//         $product_description = $row['descriere'];
-//         $product_image1 = $row['produs_imagine1'];
-//         $product_price  = $row['pret'];
-//         $product_brand = $row['cod_brand'];
-//         $product_category = $row['cod_categorie'];
-//         $product_in_query = "SELECT * FROM `intrariproduse` WHERE cod_produs=$product_id";
-//         echo "
-//         <form method='post' class='card'>
-//           <div class='product'>
-//           <img src='./admin_area/images/$product_image1' alt='$product_title' class='card-img'>
-//           <div class='card-body'>
-//             <h5 class='card-title'>$product_title</h5>
-//             <p class='card-text'>$product_price lei</p>
-//             <input type='hidden' name='product_quantity' value='1'>
-//             <input type='hidden' name='product_image' value='$product_image1'> 
-//             <input type='hidden' name='product_name' value='$product_title'>
-//             <input type='hidden' name='product_id' value='$product_id'>
-//             <input type='hidden' name='product_price' value='$product_price'>";
-//         echo "   <label for='product_size'>Choose a color:</label>
-//             <select name='product_size' required>";
-
-//         $result_product_query = mysqli_query($con, $product_in_query);
-//         while ($product_row = mysqli_fetch_assoc($result_product_query)) {
-//           $product_size = $product_row['culoare'];
-//           echo "<option value='$product_size'>$product_size</option>";
-//         }
-//         echo "</select><br>
-//             <label for='product_size'>Choose a size:</label>
-//             <select name='product_size' required>";
-//         $result_product_query = mysqli_query($con, $product_in_query);
-//         while ($product_row = mysqli_fetch_assoc($result_product_query)) {
-//           $product_size = $product_row['marime'];
-//           echo "<option value='$product_size'>$product_size</option>";
-//         }
-//         echo "</select>
-//         <br>
-//             <input type='submit' class='card-button' name='add_to_cart' value='Add to cart'>
-//             <br>
-//             <a href='product_details.php?product_id=$product_id' class='card-button'>View more</a>
-//           </div>
-//           </div>
-//         </form>";
-//       }
-//     }
-//   }
-// }
 
 function popup_card_product()
 {
@@ -403,16 +347,4 @@ function view_more()
         }
       }
     }
-}
-
-
-function options_judete()
-{
-  global $con;
-  $result_query = mysqli_query($con, "SELECT * FROM judete");
-  echo "
-  <option>Judet</option>";
-  while ($row = mysqli_fetch_assoc($result_query)) {
-    echo "<option value='{$row['ID']}'>{$row['denumire']}</option>";
-  }
 }

@@ -106,10 +106,10 @@ ORDER BY c.ID DESC");
                         ?>
                           <div class="table-row">
                             <div class="table-cell">
-                              <img src="images/<?= $table_row['produs_imagine1'] ?>" height="80px">
+                              <img src="admin_area/images/<?= $table_row['produs_imagine1'] ?>" height="80px">
                             </div>
                             <div class="table-cell">
-                              <a href="../product_details.php?product_id=<?= $table_row['cod_produs'] ?>"><?= $table_row['denumire'] ?> </a>
+                              <a href="product_details.php?product_id=<?= $table_row['cod_produs'] ?>"><?= $table_row['denumire'] ?> </a>
                             </div>
                             <div class="table-cell">
                               <?= $table_row['pret_produs'] ?>

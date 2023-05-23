@@ -48,13 +48,14 @@ if (isset($_SESSION['user_logged_in'])) {
       $attr_prod = mysqli_query($con, "SELECT * FROM atribute_produs WHERE cod_produs=$prod_id AND cod_marime=$marime_id AND cod_culoare=$color_id") or die('query failed');
       while ($row_attr = mysqli_fetch_assoc($attr_prod)) {
         $cod_atribut_produs = $row_attr['ID'];
-        mysqli_query($con, "INSERT INTO comenzi_detalii (cod_comanda,cod_atribut_produs,cantitate,pret) VALUES('$id_comanda','$cod_atribut_produs','$cantitate','$pret')") or die('query failed');
+        mysqli_query($con, "INSERT INTO comenzi_detalii (cod_comanda,cod_atribut_produs,cantitate,pret_unitar,pret) VALUES('$id_comanda','$cod_atribut_produs','$cantitate','$pret_unitar','$pret')") or die('query failed');
         $cantitate_stoc_actuala = $row_attr['cantitate'];
         $new_cant_stoc = $cantitate_stoc_actuala - $cantitate;
         mysqli_query($con, "UPDATE atribute_produs SET cantitate=$new_cant_stoc WHERE ID=$cod_atribut_produs");
       }
     }
     mysqli_query($con, "DELETE FROM cos WHERE user_id=$user_id");
+    header("location:index.php");
   }
 } else {
   header('location:login.php');

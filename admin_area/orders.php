@@ -60,8 +60,7 @@ if (isset($_GET['submit_search'])) {
   INNER JOIN clienti ON c.cod_client=clienti.ID 
   INNER JOIN comenzi_status s ON c.cod_status=s.ID
   WHERE ($condition) $status $q_date $order";
-  // echo $string_query;
-  print_r($string_query);
+
   $orders_query = mysqli_query($con, $string_query);
   //TODO pagination
 }
@@ -144,7 +143,7 @@ if (isset($_GET['submit_search'])) {
                       echo "{$row['adresa']} {$row['localitate']} $judet <br> {$row['zipcode']}" ?></td>
                   <td><?= $row['metoda_plata'] ?></td>
                   <td><?= $row['denumire'] ?></td>
-                  <td><button class="btn" data-modal-target="#modal<?= $row['cod_comanda'] ?>">Quick view</button></td>
+                  <td><button class="btn buttons" data-modal-target="#modal<?= $row['cod_comanda'] ?>">Quick view</button></td>
                 </tr>
                 <div class="modal" id="modal<?= $row['cod_comanda'] ?>">
                   <div class="modal-header">
@@ -182,7 +181,7 @@ if (isset($_GET['submit_search'])) {
                         ?>
                           <div class="table-row">
                             <div class="table-cell">
-                              <img src="images/<?= $table_row['produs_imagine1'] ?>" height="80px">
+                              <img src="images/<?= $table_row['produs_imagine1'] ?>" height="80px" width="80px" style="object-fit: contain;">
                             </div>
                             <div class="table-cell">
                               <a href="../product_details.php?product_id=<?= $table_row['cod_produs'] ?>"><?= $table_row['denumire'] ?> </a>

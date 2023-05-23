@@ -54,9 +54,9 @@ if (isset($_POST['submit'])) {
       if ($_FILES['image']['name'] != '') {
         $product_image = rand(111111111, 999999999) . '_' . $_FILES['image']['name'];
         move_uploaded_file($_FILES['image']['tmp_name'], "images/$product_image");
-        $update_sql = "UPDATE produse SET denumire='$title',cod_brand='$brand_id',cod_categorie='$category_id',pret='$price',descriere='$description',cod_subcategorie='$subcategory_id',produs_imagine1=$product_image WHERE ID=$id";
+        $update_sql = "UPDATE produse SET denumire='$title',cod_brand='$brand_id',cod_categorie='$category_id',pret='$price',descriere='$description',keywords='$keywords',cod_subcategorie='$subcategory_id',produs_imagine1=$product_image WHERE ID=$id";
       } else {
-        $update_sql = "UPDATE produse SET denumire='$title',cod_brand='$brand_id',cod_categorie='$category_id',pret='$price',descriere='$description',cod_subcategorie='$subcategory_id' WHERE ID='$id'";
+        $update_sql = "UPDATE produse SET denumire='$title',cod_brand='$brand_id',cod_categorie='$category_id',pret='$price',descriere='$description',keywords='$keywords',cod_subcategorie='$subcategory_id' WHERE ID='$id'";
       }
       mysqli_query($con, $update_sql);
     } else {

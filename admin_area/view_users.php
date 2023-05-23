@@ -4,6 +4,14 @@ session_start();
 if (!isset($_SESSION['admin']) && !$_SESSION['admin'] == true) {
   header("location:../index.php");
 }
+
+if (isset($_GET['action'])) {
+  // 0 - user / 1 - admin
+  $new_tip = ($_GET['action'] == 0) ? 1 : 0;
+  $user_id = $_GET['user_id'];
+  mysqli_query($con, "UPDATE utilizatori SET tip='$new_tip' WHERE ID='$user_id'");
+  header("location:view_users.php");
+}
 ?>
 
 <!DOCTYPE html>
@@ -28,11 +36,12 @@ if (!isset($_SESSION['admin']) && !$_SESSION['admin'] == true) {
       <table id="table_field">
         <thead>
           <th>ID</th>
-          <th>Nume</th>
-          <th>Prenume</th>
+          <th>Username</th>
+          <th>Nume Prenume</th>
           <th>Telefon</th>
+          <th>Email</th>
           <th>Adresa</th>
-          <th>Lista comenzi</th>
+          <th>Actiuni</th>
         </thead>
         <tbody>
           <?php
@@ -40,12 +49,15 @@ if (!isset($_SESSION['admin']) && !$_SESSION['admin'] == true) {
           while ($row = mysqli_fetch_assoc($user_query)) {
           ?>
             <tr>
-              <td><a href="manage_user.php" class="buttons"><?= $row['id_user'] ?></td>
-              <td><?= $row['nume'] ?></td>
-              <td><?= $row['prenume'] ?></td>
+              <td><?= $row['id_user'] ?></td>
+              <td><?= $row['username'] ?></td>
+              <td><?= $row['nume'] . " " . $row['prenume']  ?></td>
               <td><?= $row['telefon'] ?></td>
-              <td><?php echo "{$row['adresa']},{$row['adresa']}" ?></td>
-              <td><a href="view_user_orders.php?user_id=<?= $row['id_user'] ?>" class="buttons">Vezi comenzi</a></td>
+              <td><?= $row['email'] ?></td>
+              <td><?php echo "{$row['adresa']},{$row['Oras']}" ?></td>
+              <td><a href="view_user_orders.php?user_id=<?= $row['id_user'] ?>" class="buttons">Vezi comenzi</a>
+                <a href="view_users.php?user_id=<?= $row['id_user'] ?>&action=<?= $row['tip'] ?>" class="buttons" onclick="confirm('Are u sure ?')"><?php echo ($row['tip'] == 0) ? "Turn into admin" : "Turn into user" ?></a>
+              </td>
             </tr>
           <?php
           }

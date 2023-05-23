@@ -1,5 +1,10 @@
 <?php
 include("../includes/connect.php");
+session_start();
+if (!isset($_SESSION['admin']) && !$_SESSION['admin']) {
+  header("location:../index.php");
+}
+
 if (isset($_GET['id']) && $_GET['id'] != '') {
   $id = $_GET['id'];
   $q = mysqli_query($con, "SELECT * FROM branduri WHERE ID='$id'");

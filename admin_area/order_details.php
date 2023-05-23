@@ -1,7 +1,9 @@
 <?php
 include("../includes/connect.php");
 session_start();
-
+if (!isset($_SESSION['admin']) && !$_SESSION['admin']) {
+  header("location:../index.php");
+}
 if (isset($_GET['id_comanda'])) {
   $id_comanda = $_GET['id_comanda'];
   $result_comanda_q = mysqli_query($con, "SELECT * FROM comenzi c
@@ -9,13 +11,28 @@ if (isset($_GET['id_comanda'])) {
   INNER JOIN judete j on cl.cod_judet=j.ID
   WHERE c.ID=$id_comanda");
   $client_info = mysqli_fetch_assoc($result_comanda_q);
+  $result_query = mysqli_query($con, "SELECT *,p.ID AS produs_ID,c.cantitate AS cantitate_produs,c.pret AS pret_row,cl.denumire AS culoare_denumire,m.denumire AS marime_denumire FROM comenzi_detalii c 
+  INNER JOIN atribute_produs a ON c.cod_atribut_produs=a.ID
+  INNER JOIN marimi m ON a.cod_marime=m.ID
+  INNER JOIN culori cl ON a.cod_culoare=cl.ID
+  INNER JOIN produse p ON a.cod_produs=p.ID
+  WHERE cod_comanda=$id_comanda");
 }
 
 if (isset($_POST['submit'])) {
   $update_id = $_POST['status_id'];
   $new_comanda_status_id = $_POST['comanda_id'];
+  if ($update_id == 4 && $client_info['cod_status'] != 4) {
+    while ($row = mysqli_fetch_assoc($result_query)) {
+      mysqli_query($con, "UPDATE atribute_produs SET cantitate=cantitate+{$row['cantitate_produs']} WHERE ID={$row['cod_atribut_produs']}");
+    }
+  }
+  if ($client_info['cod_status'] == 4 && $update_id != 4) {
+    while ($row = mysqli_fetch_assoc($result_query)) {
+      mysqli_query($con, "UPDATE atribute_produs SET cantitate=cantitate-{$row['cantitate_produs']} WHERE ID={$row['cod_atribut_produs']}");
+    }
+  }
   mysqli_query($con, "UPDATE comenzi SET cod_status=$update_id WHERE ID=$new_comanda_status_id ");
-
   header("location:order_details.php?id_comanda=$id_comanda");
 }
 
@@ -54,12 +71,6 @@ if (isset($_POST['submit'])) {
           </thead>
           <tbody>
             <?php
-            $result_query = mysqli_query($con, "SELECT *,p.ID AS produs_ID,p.pret AS pret_produs,c.cantitate AS cantitate_produs,c.pret AS pret_row,cl.denumire AS culoare_denumire,m.denumire AS marime_denumire FROM comenzi_detalii c 
-            INNER JOIN atribute_produs a ON c.cod_atribut_produs=a.ID
-            INNER JOIN marimi m ON a.cod_marime=m.ID
-            INNER JOIN culori cl ON a.cod_culoare=cl.ID
-            INNER JOIN produse p ON a.cod_produs=p.ID
-            WHERE cod_comanda=$id_comanda");
             $total = 0;
             while ($row = mysqli_fetch_assoc($result_query)) {
             ?>
@@ -69,7 +80,7 @@ if (isset($_POST['submit'])) {
                 <td><?= $row['denumire'] ?></td>
                 <td><?= $row['marime_denumire'] ?></td>
                 <td><?= $row['culoare_denumire'] ?></td>
-                <td><?= $row['pret_produs'] ?></td>
+                <td><?= $row['pret_unitar'] ?></td>
                 <td><?= $row['cantitate_produs'] ?></td>
                 <td><?= $row['pret_row'] ?></td>
               </tr>
