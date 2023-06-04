@@ -8,6 +8,8 @@ if (isset($_POST['submit'])) {
   $judet = mysqli_real_escape_string($con, $_POST['judet']);
   $name = mysqli_real_escape_string($con, $_POST['name']);
   $email = mysqli_real_escape_string($con, $_POST['email']);
+  $oras = mysqli_real_escape_string($con, $_POST['oras']);
+  $zipcode = mysqli_real_escape_string($con, $_POST['zipcode']);
   $pass = mysqli_real_escape_string($con, md5($_POST['password']));
   $cpass = mysqli_real_escape_string($con, md5($_POST['cpassword']));
   $select_query = "SELECT * FROM utilizatori WHERE email='$email' OR `username`='$name' ";
@@ -19,7 +21,7 @@ if (isset($_POST['submit'])) {
     if ($pass != $cpass) {
       $message[] = 'Passwords do not  match! ';
     } else {
-      mysqli_query($con, "INSERT INTO utilizatori (username,`password`,email,nume,prenume,telefon,adresa,cod_judet,tip) VALUES ('$name','$pass','$email','$nume','$prenume','$telefon','$adresa','$judet','0')") or die('query failed');
+      mysqli_query($con, "INSERT INTO utilizatori (username,`password`,email,nume,prenume,telefon,adresa,cod_judet,Oras,zipcode,tip) VALUES ('$name','$pass','$email','$nume','$prenume','$telefon','$adresa','$judet','$oras','$zipcode','0')") or die('query failed');
       $message[] = 'Registered successfully';
       header('location:login.php');
     }
@@ -36,10 +38,7 @@ if (isset($_POST['submit'])) {
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="assets/fontawesome-free-6.4.0-web/css/all.css">
-  <link rel="stylesheet" href="assets/fontawesome-free-6.4.0-web/css/all.min.css">
-  <script src="assets/fontawesome-free-6.4.0-web/js/all.js"></script>
-  <script src="assets/fontawesome-free-6.4.0-web/js/all.min.js"></script>
+  <script src="https://kit.fontawesome.com/0ec3550c52.js" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
   <title>Register</title>
 </head>
@@ -52,13 +51,21 @@ if (isset($_POST['submit'])) {
     }
   }
   ?>
+
   <div class="form-container">
+    <a href="index.php" class="back-home">
+      <img class="logo" src="./poze/logo.png" alt="shop-logo">
+    </a>
     <form action="" method="post">
       <h3>Register now</h3>
-      <input type="text" name="nume" class="form-box" placeholder="Nume" required>
-      <input type="text" name="prenume" class="form-box" placeholder="Prenume" required>
-      <input type="tel" name="telefon" class="form-box" placeholder="Telefon" required>
-      <input type="text" name="adresa" class="form-box" placeholder="Adresa" required>
+      <input type="text" name="name" required placeholder="enter username*" class="form-box">
+      <input type="email" name="email" required placeholder="enter email*" class="form-box">
+      <input type="password" name="password" required placeholder="enter password*" class="form-box">
+      <input type="password" name="cpassword" required placeholder="confirm password*" class="form-box">
+      <input type="text" name="nume" class="form-box" placeholder="Nume">
+      <input type="text" name="prenume" class="form-box" placeholder="Prenume">
+      <input type="tel" name="telefon" class="form-box" placeholder="Telefon">
+      <input type="text" name="adresa" class="form-box" placeholder="Adresa">
       <select name="judet" class="form-box">
         <option value="">Judet</option>
         <?php
@@ -71,10 +78,8 @@ if (isset($_POST['submit'])) {
         }
         ?>
       </select>
-      <input type="text" name="name" required placeholder="enter username" class="form-box">
-      <input type="email" name="email" required placeholder="enter email" class="form-box">
-      <input type="password" name="password" required placeholder="enter password" class="form-box">
-      <input type="password" name="cpassword" required placeholder="confirm password" class="form-box">
+      <input type="text" name="oras" class="form-box" placeholder="Oras">
+      <input type="text" name="zipcode" class="form-box" placeholder="Cod postal">
       <input type="submit" name="submit" class="btn" value="register now">
       <p>Already have an account? <a href="login.php"> Login now</a></p>
     </form>

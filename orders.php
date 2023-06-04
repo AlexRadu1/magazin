@@ -21,9 +21,9 @@ ORDER BY c.ID DESC");
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard</title>
-  <link rel="stylesheet" href="admin_area/css/style.css">
+  <!-- <link rel="stylesheet" href="admin_area/css/style.css"> -->
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
+  <script src="https://kit.fontawesome.com/0ec3550c52.js" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 </head>
 <html>
@@ -60,7 +60,7 @@ ORDER BY c.ID DESC");
               while ($row = mysqli_fetch_assoc($orders_query)) {
               ?>
                 <tr>
-                  <td><a href="order_details.php?id_comanda=<?= $row['cod_comanda'] ?>" class="buttons"><?php echo "" . $row['cod_comanda'] . " " ?></a> </td>
+                  <td><a href="order_details.php?id_comanda=<?= $row['cod_comanda'] ?>" class="btn"><?php echo "" . $row['cod_comanda'] . " " ?></a> </td>
                   <td><?php echo "" . $row['data'] . " " ?></td>
                   <td><?php
                       $jud = mysqli_fetch_assoc(mysqli_query($con, "SELECT * FROM judete WHERE ID=" . $row['cod_judet'] . ""));
@@ -106,7 +106,7 @@ ORDER BY c.ID DESC");
                         ?>
                           <div class="table-row">
                             <div class="table-cell">
-                              <img src="admin_area/images/<?= $table_row['produs_imagine1'] ?>" height="80px">
+                              <img src="admin_area/images/<?= $table_row['produs_imagine1'] ?>" height="80px" width="80px">
                             </div>
                             <div class="table-cell">
                               <a href="product_details.php?product_id=<?= $table_row['cod_produs'] ?>"><?= $table_row['denumire'] ?> </a>

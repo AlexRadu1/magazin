@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: May 01, 2023 at 08:28 PM
+-- Generation Time: Jun 04, 2023 at 01:07 PM
 -- Server version: 8.0.31
 -- PHP Version: 8.2.0
 
@@ -38,24 +38,26 @@ CREATE TABLE IF NOT EXISTS `atribute_produs` (
   KEY `cod_culoare` (`cod_culoare`),
   KEY `cod_marime` (`cod_marime`),
   KEY `cod_produs` (`cod_produs`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `atribute_produs`
 --
 
 INSERT INTO `atribute_produs` (`ID`, `cod_produs`, `cod_marime`, `cod_culoare`, `cantitate`) VALUES
-(11, 1, 8, 1, 6),
-(12, 1, 9, 1, 6),
-(15, 2, 8, 2, 6),
+(11, 1, 8, 1, 10),
+(12, 1, 9, 1, 11),
+(15, 2, 8, 2, 4),
 (16, 2, 9, 2, 4),
 (18, 3, 5, 3, 0),
 (19, 3, 2, 3, 6),
-(20, 3, 3, 3, 6),
-(21, 3, 4, 3, 6),
+(20, 3, 3, 3, 8),
+(21, 3, 4, 3, 16),
 (22, 3, 6, 3, 6),
 (23, 3, 7, 3, 6),
-(25, 4, 11, 3, 5);
+(25, 4, 11, 3, 5),
+(27, 1, 10, 1, 5),
+(28, 2, 10, 2, 5);
 
 -- --------------------------------------------------------
 
@@ -124,7 +126,7 @@ CREATE TABLE IF NOT EXISTS `clienti` (
   PRIMARY KEY (`ID`),
   KEY `cod_judet` (`cod_judet`),
   KEY `cod_utilizator` (`cod_utilizator`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `clienti`
@@ -133,7 +135,11 @@ CREATE TABLE IF NOT EXISTS `clienti` (
 INSERT INTO `clienti` (`ID`, `nume`, `prenume`, `adresa`, `cod_judet`, `localitate`, `zipcode`, `telefon`, `date_facturare`, `cod_utilizator`) VALUES
 (23, 'lexxerr', 'mere', 'Str. Tudor Vladimirescu,nr.39', 4, 'ilfov', '007327', '0728370070', 'lexxerr mere, Str. Tudor Vladimirescu,nr.39, București , ilfov , 007327', 2),
 (24, 'ilie', 'andrei', 'Str.Adamanti,nr.221', 4, 'ilfov', '007327', '0739242290', 'ilie andrei, Str.Adamanti,nr.221, București , ilfov , 007327', 6),
-(25, 'ilie', 'andrei', 'Str.Adamanti,nr.221', 4, 'ilfov', '007327', '0739242290', 'ilie andrei, Str.Adamanti,nr.221, București , ilfov , 007327', 6);
+(25, 'ilie', 'andrei', 'Str.Adamanti,nr.221', 4, 'ilfov', '007327', '0739242290', 'ilie andrei, Str.Adamanti,nr.221, București , ilfov , 007327', 6),
+(26, 'Alexandru', 'loli', 'Str.Pictor nicolae grigorescu, 39', 24, 'Branesti', '077030', '0728370070', 'Alexandru loli, Str.Pictor nicolae grigorescu, 39, Ilfov , Branesti , 077030', 1),
+(27, 'Alex', 'Adi', 'Str sorilor,34', 10, 'Brasov', '272271', '7286775474', 'Alex Adi, Str sorilor,34, Brașov , Brasov , 272271', 1),
+(28, 'Alex', 'Adi', 'Str sorilor,34', 10, 'Brasov', '272271', '7286775474', 'Alex Adi, Str sorilor,34, Brașov , Brasov , 272271', 1),
+(29, 'Alex', 'Adi', 'Str sorilor,34', 10, 'Brasov', '272271', '7286775474', 'Alex Adi, Str sorilor,34, Brașov , Brasov , 272271', 1);
 
 -- --------------------------------------------------------
 
@@ -152,7 +158,7 @@ CREATE TABLE IF NOT EXISTS `comenzi` (
   PRIMARY KEY (`ID`),
   KEY `cod_client` (`cod_client`),
   KEY `cod_status` (`cod_status`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `comenzi`
@@ -161,7 +167,11 @@ CREATE TABLE IF NOT EXISTS `comenzi` (
 INSERT INTO `comenzi` (`ID`, `cod_client`, `pret_total`, `cod_status`, `data`, `metoda_plata`) VALUES
 (9, 23, 252, 5, '2023-04-10 12:15:20', 'Ramburs la livrare'),
 (10, 24, 130, 5, '2023-04-11 13:10:22', 'Ramburs la livrare'),
-(11, 25, 130, 5, '2023-04-11 13:11:40', 'Ramburs la livrare');
+(11, 25, 130, 5, '2023-04-11 13:11:40', 'Ramburs la livrare'),
+(12, 26, 300, 4, '2023-05-09 11:53:24', 'Card bancar'),
+(13, 27, 700, 4, '2023-05-29 08:44:19', 'Ramburs la livrare'),
+(14, 28, 110, 4, '2023-05-29 08:48:56', 'Ramburs la livrare'),
+(15, 29, 1325, 5, '2023-05-30 16:06:32', 'Ramburs la livrare');
 
 -- --------------------------------------------------------
 
@@ -175,23 +185,34 @@ CREATE TABLE IF NOT EXISTS `comenzi_detalii` (
   `cod_comanda` int NOT NULL,
   `cod_atribut_produs` int NOT NULL,
   `cantitate` int NOT NULL,
-  `pret` int NOT NULL,
+  `pret_unitar` float NOT NULL,
+  `pret` float NOT NULL,
   PRIMARY KEY (`ID`),
   KEY `cod_atribut_produs` (`cod_atribut_produs`),
   KEY `cod_comanda` (`cod_comanda`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `comenzi_detalii`
 --
 
-INSERT INTO `comenzi_detalii` (`ID`, `cod_comanda`, `cod_atribut_produs`, `cantitate`, `pret`) VALUES
-(7, 9, 11, 1, 222),
-(8, 9, 20, 3, 30),
-(9, 10, 16, 1, 100),
-(10, 10, 18, 3, 30),
-(11, 11, 16, 1, 100),
-(12, 11, 18, 3, 30);
+INSERT INTO `comenzi_detalii` (`ID`, `cod_comanda`, `cod_atribut_produs`, `cantitate`, `pret_unitar`, `pret`) VALUES
+(7, 9, 11, 1, 222, 222),
+(8, 9, 20, 3, 10, 30),
+(9, 10, 16, 1, 100, 100),
+(10, 10, 18, 3, 10, 30),
+(11, 11, 16, 1, 1, 100),
+(12, 11, 18, 3, 10, 30),
+(13, 12, 25, 3, 100, 300),
+(14, 13, 12, 1, 225, 225),
+(15, 13, 11, 1, 225, 225),
+(16, 13, 16, 1, 100, 100),
+(17, 13, 19, 5, 10, 50),
+(18, 13, 15, 1, 100, 100),
+(19, 14, 20, 1, 10, 10),
+(20, 14, 25, 1, 100, 100),
+(21, 15, 11, 5, 225, 1125),
+(22, 15, 15, 2, 100, 200);
 
 -- --------------------------------------------------------
 
@@ -232,7 +253,7 @@ CREATE TABLE IF NOT EXISTS `cos` (
   PRIMARY KEY (`ID`),
   KEY `cod_atribut_produs` (`cod_atribut_produs`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=106 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `cos`
@@ -240,7 +261,8 @@ CREATE TABLE IF NOT EXISTS `cos` (
 
 INSERT INTO `cos` (`ID`, `user_id`, `cod_atribut_produs`, `quantity`) VALUES
 (88, 2, 15, 1),
-(91, 6, 11, 1);
+(91, 6, 11, 1),
+(105, 1, 11, 2);
 
 -- --------------------------------------------------------
 
@@ -303,14 +325,15 @@ CREATE TABLE IF NOT EXISTS `imagini` (
   `path` varchar(255) NOT NULL,
   PRIMARY KEY (`ID`),
   KEY `cod_produs` (`cod_produs`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `imagini`
 --
 
 INSERT INTO `imagini` (`ID`, `cod_produs`, `path`) VALUES
-(5, 1, '444177759_png-clipart-shoe-nike-free-air-force-nike-shoes-image-file-formats-fashion-thumbnail.png');
+(5, 1, '444177759_png-clipart-shoe-nike-free-air-force-nike-shoes-image-file-formats-fashion-thumbnail.png'),
+(8, 1, '190929617_image-removebg-preview (1).png');
 
 -- --------------------------------------------------------
 
@@ -327,17 +350,20 @@ CREATE TABLE IF NOT EXISTS `intrarifacturi` (
   `data` date NOT NULL,
   `TVA` varchar(32) NOT NULL,
   `nr_aviz` varchar(32) NOT NULL,
+  `pret_total` float NOT NULL,
   PRIMARY KEY (`ID`),
   KEY `cod_furnizor` (`cod_furnizor`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `intrarifacturi`
 --
 
-INSERT INTO `intrarifacturi` (`ID`, `serie`, `nr`, `cod_furnizor`, `data`, `TVA`, `nr_aviz`) VALUES
-(24, 'IF', '001', 1, '2023-04-10', '19', '328'),
-(25, 'FFF', '4444', 1, '2023-04-28', '19', '1111');
+INSERT INTO `intrarifacturi` (`ID`, `serie`, `nr`, `cod_furnizor`, `data`, `TVA`, `nr_aviz`, `pret_total`) VALUES
+(24, 'IF', '001', 1, '2023-04-10', '19', '328', 3150),
+(25, 'FFF', '4444', 1, '2023-04-28', '19', '1111', 3150),
+(26, 'xd', '444', 1, '2023-05-23', '19', '222', 3150),
+(27, 'XXX', '123', 1, '2023-05-23', '19', '222', 1450);
 
 -- --------------------------------------------------------
 
@@ -359,7 +385,7 @@ CREATE TABLE IF NOT EXISTS `intrariproduse` (
   KEY `cod_marime` (`cod_marime`),
   KEY `cod_produs` (`cod_produs`),
   KEY `cod_culoare` (`cod_culoare`)
-) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `intrariproduse`
@@ -379,7 +405,13 @@ INSERT INTO `intrariproduse` (`ID`, `cod_factura`, `cod_produs`, `cantitate`, `c
 (56, 24, 3, 25, 4, 3, 50),
 (57, 24, 3, 15, 6, 3, 50),
 (58, 24, 3, 10, 7, 3, 50),
-(59, 25, 4, 5, 11, 3, 95);
+(59, 25, 4, 5, 11, 3, 95),
+(60, 26, 1, 5, 8, 1, 210),
+(61, 26, 1, 5, 9, 1, 210),
+(62, 26, 1, 5, 10, 1, 210),
+(63, 27, 2, 5, 10, 2, 200),
+(64, 27, 3, 10, 4, 3, 30),
+(65, 27, 3, 5, 3, 3, 30);
 
 -- --------------------------------------------------------
 
@@ -499,9 +531,9 @@ CREATE TABLE IF NOT EXISTS `produse` (
 --
 
 INSERT INTO `produse` (`ID`, `denumire`, `cod_brand`, `cod_categorie`, `pret`, `descriere`, `keywords`, `cod_subcategorie`, `produs_imagine1`) VALUES
-(1, 'Shoes', 1, 1, 225, 'bla bla', 'bla', 4, 'png-clipart-nike-air-max-nike-free-air-force-shoe-nike-white-outdoor-shoe-thumbnail.png'),
-(2, 'kkk', 1, 1, 100, 'kkk', 'kkk', 4, 'png-clipart-sneakers-skate-shoe-nike-one-nike-shoe-purple-fashion-thumbnail.png'),
-(3, 'Tshirt', 2, 3, 10, 'hahaheheh', 'ana', 11, 'denim.png'),
+(1, 'Shoes', 1, 1, 225, 'Nike running shoes.', 'shoes running red black 40 41 42 43 44 45 39 38 37 36 adidasi alergat rosu negru ', 4, 'png-clipart-nike-air-max-nike-free-air-force-shoe-nike-white-outdoor-shoe-thumbnail.png'),
+(2, 'Blue Shoes', 1, 1, 100, '123', 'kkk', 4, 'png-clipart-sneakers-skate-shoe-nike-one-nike-shoe-purple-fashion-thumbnail.png'),
+(3, 'Tshirt', 4, 3, 10, 'Tricou negru 100% bumbac', 'ana', 11, 'denim.png'),
 (4, 'Curea Calvin Klein', 5, 4, 100, 'Material: 100% Piele', 'curea Calvin Klein negru ', 12, '315649957_ck-curea.png');
 
 -- --------------------------------------------------------
@@ -553,6 +585,8 @@ CREATE TABLE IF NOT EXISTS `utilizatori` (
   `telefon` varchar(10) NOT NULL,
   `adresa` varchar(255) NOT NULL,
   `cod_judet` int NOT NULL,
+  `Oras` varchar(32) NOT NULL,
+  `zipcode` varchar(16) NOT NULL,
   `tip` enum('0','1') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'user(0),admin(1)',
   PRIMARY KEY (`ID`),
   KEY `cod_judet` (`cod_judet`)
@@ -562,13 +596,13 @@ CREATE TABLE IF NOT EXISTS `utilizatori` (
 -- Dumping data for table `utilizatori`
 --
 
-INSERT INTO `utilizatori` (`ID`, `username`, `password`, `email`, `nume`, `prenume`, `telefon`, `adresa`, `cod_judet`, `tip`) VALUES
-(1, 'lexxerr', 'b5ed676d862caa35a4949a1e590d709c', 'alexeuno1@yahoo.com', '', '', '', '', 2, '1'),
-(2, 'user1', '24c9e15e52afc47c225b757e7bee1f9d', 'user1@gmail.com', '', '', '', '', 2, '0'),
-(3, 'user1', '24c9e15e52afc47c225b757e7bee1f9d', 'user1@gmail.com', '', '', '', '', 2, '0'),
-(4, 'user2', '7e58d63b60197ceb55a1c487989a3720', 'user2@gmail.com', '', '', '', '', 2, '0'),
-(5, 'user3', '92877af70a45fd6a2ed7fe81e1236b78', 'user3@gmail.com', '', '', '', '', 2, '0'),
-(6, 'asdsa', '3f02ebe3d7929b091e3d8ccfde2f3bc6', 'user4@gmail.com', 'lala', 'boca', '0722222222', 'Str.Avram Ianuc,nr222', 2, '0');
+INSERT INTO `utilizatori` (`ID`, `username`, `password`, `email`, `nume`, `prenume`, `telefon`, `adresa`, `cod_judet`, `Oras`, `zipcode`, `tip`) VALUES
+(1, 'lexxerr', 'b5ed676d862caa35a4949a1e590d709c', 'alexeuno1@yahoo.com', 'Alex', 'Adi', '7286775474', 'Str sorilor,34', 10, 'Brasov', '272271', '1'),
+(2, 'user1', '24c9e15e52afc47c225b757e7bee1f9d', 'user1@gmail.com', 'Alex', 'boca', '7286775475', 'Str sorilor,34', 10, 'Brasov', '272272', '0'),
+(3, 'user1', '24c9e15e52afc47c225b757e7bee1f9d', 'user1@gmail.com', 'Alex', 'boca', '7286775475', 'Str sorilor,34', 10, 'Brasov', '272272', '0'),
+(4, 'user2', '7e58d63b60197ceb55a1c487989a3720', 'user2@gmail.com', 'Alex', 'boca', '7286775475', 'Str sorilor,34', 10, 'Brasov', '272272', '0'),
+(5, 'user3', '92877af70a45fd6a2ed7fe81e1236b78', 'user3@gmail.com', 'Alex', 'boca', '7286775475', 'Str sorilor,34', 10, 'Brasov', '272272', '0'),
+(6, 'asdsa', '3f02ebe3d7929b091e3d8ccfde2f3bc6', 'user4@gmail.com', 'Alex', 'boca', '7286775475', 'Str sorilor,34', 10, 'Brasov', '272272', '0');
 
 --
 -- Constraints for dumped tables

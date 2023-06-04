@@ -7,6 +7,14 @@ if (isset($_SESSION['grand_total'])) {
 
 if (isset($_SESSION['user_logged_in'])) {
   $user_id = $_SESSION['user_id'];
+  $user_info = mysqli_fetch_assoc(mysqli_query($con, "SELECT * FROM utilizatori WHERE ID=$user_id"));
+  $profile_name = $user_info['nume'];
+  $profile_prename = $user_info['prenume'];
+  $profile_telefon = $user_info['telefon'];
+  $profile_adresa = $user_info['adresa'];
+  $profile_cod_judet = $user_info['cod_judet'];
+  $profile_Oras = $user_info['Oras'];
+  $profile_zipcode = $user_info['zipcode'];
   if (isset($_POST['submit'])) {
     $nume = mysqli_real_escape_string($con, $_POST['name']);
     $prenume = mysqli_real_escape_string($con, $_POST['prenume']);
@@ -71,10 +79,7 @@ if (isset($_SESSION['user_logged_in'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="assets/fontawesome-free-6.4.0-web/css/all.css">
-  <link rel="stylesheet" href="assets/fontawesome-free-6.4.0-web/css/all.min.css">
-  <script src="assets/fontawesome-free-6.4.0-web/js/all.js"></script>
-  <script src="assets/fontawesome-free-6.4.0-web/js/all.min.js"></script>
+  <script src="https://kit.fontawesome.com/0ec3550c52.js" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 </head>
 
@@ -87,35 +92,39 @@ if (isset($_SESSION['user_logged_in'])) {
         <div class="nume-prenume">
           <div class="nume">
             <label for="name">Nume:</label>
-            <input type="text" id="name" name="name" required>
+            <input type="text" id="name" name="name" value="<?= $profile_name ?>" required>
           </div>
           <div class="nume">
             <label for="prenume">Prenume:</label>
-            <input type="text" id="prenume" name="prenume" required>
+            <input type="text" id="prenume" name="prenume" value="<?= $profile_prename ?>" required>
           </div>
         </div>
         <label for="phone">Enter your phone number:</label>
-        <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" required>
+        <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" value="<?= $profile_telefon ?>" required>
         <label for="address">Address:</label>
-        <input type="text" id="address" name="address" required>
+        <input type="text" id="address" name="address" value="<?= $profile_adresa ?>" required>
         <label for="Judet">Judet:</label>
         <select id="Judet" name="judet" required>
           <option value="">Alege un judet</option>
           <?php
           $query = mysqli_query($con, "SELECT * FROM judete");
           while ($row = mysqli_fetch_assoc($query)) {
-            echo "<option value=" . $row['ID'] . ">" . $row['denumire'] . "</option>";
+            if ($row['ID'] == $profile_cod_judet) {
+              echo "<option value= {$row['ID']} selected>" . $row['denumire'] . "</option>";
+            } else {
+              echo "<option value= {$row['ID']}>" . $row['denumire'] . "</option>";
+            }
           }
           ?>
         </select>
         <div class="nume-prenume">
           <div class="nume">
-            <label for="Localitate">Localitate:</label>
-            <input type="text" id="Localitate" name="localitate" required>
+            <label for="Localitate">Oras:</label>
+            <input type="text" id="Localitate" name="localitate" value="<?= $profile_Oras ?>" required>
           </div>
           <div class="nume">
             <label for="zip">Cod poștal:</label>
-            <input type="text" id="zip" name="zip" required>
+            <input type="text" id="zip" name="zip" value="<?= $profile_zipcode ?>" required>
           </div>
         </div>
       </div>
@@ -164,6 +173,8 @@ if (isset($_SESSION['user_logged_in'])) {
       <label for="ramburs"><input type="radio" id="ramburs" name="payment_method" value="1" checked>Plata ramburs</label>
       <label for="card"><input type="radio" id="card" name="payment_method" value="2">Plata card</label>
       <div class="showDiv1" style="display: none;">
+        <label for="cardholder">Card Holder Name:</label>
+        <input type="text" id="cardnumber" name="cardholder">
         <label for="cardnumber">Card Number:</label>
         <input type="text" id="cardnumber" name="cardnumber">
         <br>

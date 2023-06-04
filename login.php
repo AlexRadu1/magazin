@@ -7,7 +7,6 @@ if (isset($_POST['submit'])) {
   $pass = mysqli_real_escape_string($con, md5($_POST['password']));
   $select_query = "SELECT * FROM utilizatori WHERE email='$email' AND `password`='$pass' ";
   $select = mysqli_query($con, $select_query) or die('query failed');
-
   if (mysqli_num_rows($select) > 0) {
     $row = mysqli_fetch_assoc($select);
     $_SESSION['user_id'] = $row['ID'];
@@ -47,10 +46,7 @@ if (isset($_POST['submit'])) {
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="assets/fontawesome-free-6.4.0-web/css/all.css">
-  <link rel="stylesheet" href="assets/fontawesome-free-6.4.0-web/css/all.min.css">
-  <script src="assets/fontawesome-free-6.4.0-web/js/all.js"></script>
-  <script src="assets/fontawesome-free-6.4.0-web/js/all.min.js"></script>
+  <script src="https://kit.fontawesome.com/0ec3550c52.js" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
   <title>Login</title>
 </head>

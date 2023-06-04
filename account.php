@@ -6,7 +6,7 @@ if (isset($_SESSION['user_logged_in'])) {
 }
 $user_data_query = mysqli_query($con, "SELECT * FROM utilizatori WHERE ID=$user_id");
 $user_data = mysqli_fetch_assoc($user_data_query);
-// print_r($user_data);
+
 if (isset($_GET['logout'])) {
   session_destroy();
   header('location:login.php');
@@ -21,7 +21,7 @@ if (isset($_POST['submit'])) {
   $zipcode = mysqli_real_escape_string($con, $_POST['zipcode']);
   $telefon = mysqli_real_escape_string($con, $_POST['telefon']);
 
-  mysqli_query($con, "UPDATE utilizatori SET nume='$nume',prenume='$prenume',adresa='$adresa',cod_judet='$judet',oras='$oras',zipcode='$zipcode',telefon=$telefon");
+  mysqli_query($con, "UPDATE utilizatori SET nume='$nume',prenume='$prenume',adresa='$adresa',cod_judet='$judet',`Oras`='$oras',zipcode='$zipcode',telefon=$telefon WHERE ID=$user_id");
 
   header("location:account.php");
 }
@@ -37,10 +37,7 @@ if (isset($_POST['submit'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="assets/fontawesome-free-6.4.0-web/css/all.css">
-  <link rel="stylesheet" href="assets/fontawesome-free-6.4.0-web/css/all.min.css">
-  <script src="assets/fontawesome-free-6.4.0-web/js/all.js"></script>
-  <script src="assets/fontawesome-free-6.4.0-web/js/all.min.js"></script>
+  <script src="https://kit.fontawesome.com/0ec3550c52.js" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 </head>
 
@@ -55,7 +52,7 @@ if (isset($_POST['submit'])) {
       </ul>
     </div>
     <div class="container">
-      <div class="order-detail-header">
+      <div class="account-detail">
         <h1>Welcome <?= $user_data['username'] ?>!</h1>
         <form action="" method="post">
           <div class="form-row">
@@ -91,7 +88,7 @@ if (isset($_POST['submit'])) {
             </div>
             <div class="form-col half">
               <label for="oras">Oras</label>
-              <input type="text" value="<?= $user_data['prenume'] ?>" name="oras" id="oras">
+              <input type="text" value="<?= $user_data['Oras'] ?>" name="oras" id="oras">
             </div>
           </div>
           <div class="form-row">

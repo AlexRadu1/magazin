@@ -34,16 +34,21 @@ if (isset($_GET['action']) && $_GET['action'] == 1) {
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <link rel="stylesheet" href="admin_area/css/style.css">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
+  <script src="https://kit.fontawesome.com/0ec3550c52.js" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 </head>
 
 <body>
   <?php include("includes/header.php") ?>
   <div class="wrapper">
-
+    <div class="account-menu">
+      <h2>Detalii cont</h2>
+      <ul>
+        <li><a href="account.php">Date presonale</a></li>
+        <li><a href="orders.php">Istoric comenzi</a></li>
+      </ul>
+    </div>
     <div class="container">
       <div class="order-detail-header">Detalii comanda #<?= $id_comanda ?> </div>
       <div class="table-container">
@@ -104,7 +109,7 @@ if (isset($_GET['action']) && $_GET['action'] == 1) {
           <span><strong>Status comanda:</strong><?= $client_info['nume_stat'] ?> </span>
         </div>
         <?php if (!($client_info['status_id'] == 4 || $client_info['status_id'] == 5)) : ?>
-          <a href="order_details?id_comanda=<?= $id_comanda ?>&action=1">Anuleaza comanda</a>
+          <a href="order_details?id_comanda=<?= $id_comanda ?>&action=1" class="btn" onclick="return confirm('Are you sure you want to cancel order?')">Anuleaza comanda</a>
         <?php endif; ?>
       </div>
     </div>
