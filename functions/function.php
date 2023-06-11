@@ -210,7 +210,25 @@ function get_categories()
   while ($category_row_data = mysqli_fetch_assoc($result_categories)) {
     $category_title = $category_row_data['denumire'];
     $category_id = $category_row_data['ID'];
-    echo "<li><a href='index.php?category=$category_id' class='$category_title-btn'>$category_title<i class='fas fa-caret-down'></i></a>";
+    echo "<li><a href='index.php?category=$category_id' class='$category_title-btn'><span>$category_title</span>";
+    if (isset($_GET['category'])) {
+      if ($_GET['category'] === $category_id) {
+        echo "<i class='fas fa-caret-down'></i>";
+      } else {
+        echo "<i class='fa-solid fa-caret-left'></i>";
+      }
+    } elseif (isset($_GET['subcategory'])) {
+      $query = mysqli_query($con, "SELECT * FROM subcategorii WHERE ID={$_GET['subcategory']}");
+      $row = mysqli_fetch_assoc($query);
+      if ($category_id === $row['cod_categorie']) {
+        echo "<i class='fas fa-caret-down'></i>";
+      } else {
+        echo "<i class='fa-solid fa-caret-left'></i>";
+      }
+    } else {
+      echo "<i class='fa-solid fa-caret-left'></i>";
+    }
+    echo "</a>";
     get_subcategories($category_id);
     echo "</li>";
   }
@@ -220,13 +238,25 @@ function get_subcategories($id)
   global $con;
   $select_subcategory = "SELECT * FROM subcategorii WHERE cod_categorie=$id";
   $result_subcategories = mysqli_query($con, $select_subcategory);
-  echo "<ul>";
+  echo "<ul ";
+  if (isset($_GET['category'])) {
+    if ($_GET['category'] === $id) {
+      echo "style='display: block;'";
+    }
+  }
+  if (isset($_GET['subcategory'])) {
+    $query = mysqli_query($con, "SELECT * FROM subcategorii WHERE ID={$_GET['subcategory']}");
+    $row = mysqli_fetch_assoc($query);
+    if ($id === $row['cod_categorie']) {
+      echo "style='display: block;'";
+    }
+  }
+  echo ">";
   while ($subcategory_row_data = mysqli_fetch_assoc($result_subcategories)) {
     $subcategory_title = $subcategory_row_data['denumire'];
     $subcategory_id = $subcategory_row_data['ID'];
     echo "<li><a href=index.php?subcategory=$subcategory_id>$subcategory_title</a></li>";
   }
-
   echo "</ul>";
 }
 

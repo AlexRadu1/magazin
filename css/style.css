@@ -70,7 +70,7 @@ header {
 }
 
 .show {
-  display: block;
+  display: block !important;
 }
 
 .navbar-main {
@@ -168,8 +168,6 @@ header {
 }
 
 .sidebar ul {
-  /* height: 100%; */
-  /* width: 100%; */
   list-style: none;
 }
 
@@ -177,6 +175,7 @@ header {
   line-height: 60px;
 }
 .sidebar ul li a {
+  position: relative;
   color: white;
   text-decoration: none;
   font-size: 18px;
@@ -184,6 +183,14 @@ header {
   font-weight: 500;
   display: block;
   width: 100%;
+}
+
+.sidebar ul li a i {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  font-size: 22px;
 }
 .sidebar ul ul a {
   padding-left: 80px;
@@ -197,9 +204,9 @@ header {
 .sidebar li ul {
   display: none;
 }
-.sidebar li:hover ul {
+/* .sidebar li:hover ul {
   display: block;
-}
+} */
 
 /* CARDS BOX */
 
