@@ -1,6 +1,7 @@
 <?php
 include('includes/connect.php');
 session_start();
+print_r($_SESSION['cart']);
 if (isset($_SESSION['user_logged_in'])) {
   $user_id = $_SESSION['user_id'];
   $select_cart_items_query = mysqli_query($con, "SELECT * FROM cos WHERE user_id = $user_id");
@@ -28,11 +29,11 @@ if (isset($_SESSION['user_logged_in'])) {
     $stock_quantity = 0;
     while ($row = mysqli_fetch_assoc($reuslt_check_query)) {
       $stock_quantity = $row['cantitate'];
+      if ($stock_quantity >= $update_quantity) {
+        mysqli_query($con, "UPDATE cos SET quantity='$update_quantity' WHERE ID='$update_id'") or die('query failed');
+        $message[] = 'Cart updated! ';
+      } else $message[] = 'Stock insuficient! ';
     }
-    if ($stock_quantity >= $update_quantity) {
-      mysqli_query($con, "UPDATE cos SET quantity='$update_quantity' WHERE ID='$update_id'") or die('query failed');
-      $message[] = 'Cart updated! ';
-    } else $message[] = 'Stock insuficient! ';
   }
   if (isset($_GET['remove'])) {
     $remove_id = $_GET['remove'];
@@ -65,7 +66,7 @@ if (isset($_SESSION['user_logged_in'])) {
   }
   if (isset($_GET['remove'])) {
     foreach ($_SESSION['cart'] as $key => $cart_item) {
-      if ($cart_item['product_id'] == $_GET['remove']) {
+      if ($key == $_GET['remove']) {
         unset($_SESSION['cart'][$key]);
         header('location:cart.php');
       }
@@ -73,17 +74,17 @@ if (isset($_SESSION['user_logged_in'])) {
   }
   if (isset($_POST['update_cart'])) {
     foreach ($_SESSION['cart'] as $key => $cart_item) {
-      if ($cart_item['product_id'] == $_POST['product_id']) {
+      if ($cart_item['cod_atribut_produs'] == $_POST['product_id']) {
         $check_query = "SELECT * FROM atribute_produs WHERE cod_produs=" . $cart_item['product_id'] . " AND cod_marime=" . $cart_item['size'] . " AND cod_culoare=" . $cart_item['color'] . "";
         $reuslt_check_query = mysqli_query($con, $check_query);
         $quantity = 0;
         while ($row = mysqli_fetch_assoc($reuslt_check_query)) {
           $quantity = $row['cantitate'];
+          if ($quantity >= $_POST['cart_quantity']) {
+            $_SESSION['cart'][$key]['quantity'] = $_POST['cart_quantity'];
+            $message[] = 'Cart updated! ';
+          } else $message[] = 'Stock insuficient! ';
         }
-        if ($quantity >= $_POST['cart_quantity']) {
-          $_SESSION['cart'][$key]['quantity'] = $_POST['cart_quantity'];
-          $message[] = 'Cart updated! ';
-        } else $message[] = 'Stock insuficient! ';
       }
     }
   }
@@ -220,7 +221,8 @@ if (isset($_GET['logout'])) {
               <td><?php echo $row['pret'] ?>lei</td>
               <td>
                 <form method="post">
-                  <input type="hidden" name="product_id" value="<?php echo $row['ID'] ?>">
+
+                  <input type="hidden" name="product_id" value="<?php echo $cart_item['cod_atribut_produs'] ?>">
                   <input type="number" min="1" name="cart_quantity" value="<?php echo $cant = $cart_item['quantity'] ?>">
                   <input type="submit" name="update_cart" value="update" class="option-btn">
                 </form>

@@ -21,8 +21,8 @@ if (isset($_SESSION['user_logged_in'])) {
       $row = mysqli_fetch_assoc($select_atribut);
       $cod_atribut_prod = $row['ID'];
       $id = mysqli_fetch_assoc(mysqli_query($con, "SELECT * FROM cos WHERE user_id=$user_id AND cod_atribut_produs=$cod_atribut_prod"));
-      mysqli_query($con, "UPDATE cos SET quantity=quantity+1 WHERE ID={$id['ID']}") or die('query failed');
-      $message[] = 'product already added to cart! Increased quantity by 1';
+      mysqli_query($con, "UPDATE cos SET quantity=quantity+$product_quantity WHERE ID={$id['ID']}") or die('query failed');
+      $message[] = "product already added to cart! Increased quantity by $product_quantity";
     } else {
       $select_atribut = mysqli_query($con, "SELECT ID FROM atribute_produs WHERE cod_produs=$product_id AND cod_marime=$product_size AND cod_culoare=$product_color");
       $row = mysqli_fetch_assoc($select_atribut);
@@ -36,6 +36,7 @@ if (isset($_SESSION['user_logged_in'])) {
     $product_id = $_POST['product_id'];
     $product_size = $_POST['txt_size'];
     $product_color = $_POST['txt_color'];
+    $product_quantity = $_POST['product_quantity'];
     $select_atribut = mysqli_query($con, "SELECT ID FROM atribute_produs WHERE cod_produs=$product_id AND cod_marime=$product_size AND cod_culoare=$product_color");
     $row = mysqli_fetch_assoc($select_atribut);
     $cod_atribut_prod = $row['ID'];
@@ -44,10 +45,10 @@ if (isset($_SESSION['user_logged_in'])) {
       if (in_array($cod_atribut_prod, $item_array_atr)) {
         foreach ($_SESSION['cart'] as $key => $cart_item) {
           if ($cart_item['cod_atribut_produs'] == $cod_atribut_prod) {
-            $_SESSION['cart'][$key]['quantity'] += 1;
+            $_SESSION['cart'][$key]['quantity'] += $product_quantity;
           }
         }
-        $message[] = 'product already added to cart! Increased quantity by 1';
+        $message[] = "product already added to cart! Increased quantity by $product_quantity";
       } else {
         $item_array = array(
           'cod_atribut_produs' => $cod_atribut_prod,
