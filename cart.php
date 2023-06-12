@@ -1,7 +1,7 @@
 <?php
 include('includes/connect.php');
 session_start();
-print_r($_SESSION['cart']);
+
 if (isset($_SESSION['user_logged_in'])) {
   $user_id = $_SESSION['user_id'];
   $select_cart_items_query = mysqli_query($con, "SELECT * FROM cos WHERE user_id = $user_id");
@@ -195,7 +195,7 @@ if (isset($_GET['logout'])) {
             $select_query = "SELECT * FROM `produse`";
             $result_query = mysqli_query($con, $select_query);
             while ($row = mysqli_fetch_assoc($result_query)) {
-              foreach ($_SESSION['cart'] as $cart_item) {
+              foreach ($_SESSION['cart'] as $key => $cart_item) {
                 if ($row['ID'] == $cart_item['product_id']) {
 
     ?>
@@ -229,7 +229,7 @@ if (isset($_GET['logout'])) {
               </td>
               <td><?php echo $sub_total = $row['pret'] * $cart_item['quantity'] ?>lei</td>
               <td>
-                <a href="cart.php?remove=<?php echo $row['ID'] ?>" class="delete-btn" onclick="return confirm('Remove item from cart?');">Remove</a>
+                <a href="cart.php?remove=<?php echo $key ?>" class="delete-btn" onclick="return confirm('Remove item from cart?');">Remove</a>
               </td>
             </tr>
     <?php
