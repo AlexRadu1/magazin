@@ -1,5 +1,6 @@
 <?php
 include("includes/connect.php");
+include('functions/function.php');
 session_start();
 if (isset($_SESSION['user_logged_in'])) {
   $user_id = $_SESSION['user_id'];

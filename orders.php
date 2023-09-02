@@ -1,5 +1,6 @@
 <?php
 include("includes/connect.php");
+include('functions/function.php');
 session_start();
 if (isset($_SESSION['user_logged_in'])) {
   $user_id = $_SESSION['user_id'];
@@ -157,44 +158,7 @@ ORDER BY c.ID DESC");
     </div>
   </div>
   <div id="overlay"></div>
-  <script>
-    const openModalButtons = document.querySelectorAll('[data-modal-target]');
-    const closeModalButtons = document.querySelectorAll('[data-close-button]');
-    const overlay = document.getElementById('overlay');
-
-    openModalButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        const modal = document.querySelector(button.dataset.modalTarget)
-        openModal(modal)
-      })
-    })
-
-    overlay.addEventListener('click', () => {
-      const modals = document.querySelectorAll('.modal.active')
-      modals.forEach(modal => {
-        closeModal(modal)
-      })
-    })
-
-    closeModalButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        const modal = button.closest('.modal')
-        closeModal(modal)
-      })
-    })
-
-    function openModal(modal) {
-      if (modal == null) return
-      modal.classList.add('active')
-      overlay.classList.add('active')
-    }
-
-    function closeModal(modal) {
-      if (modal == null) return
-      modal.classList.remove('active')
-      overlay.classList.remove('active')
-    }
-  </script>
+  <script src="javascript.js"></script>
 </body>
 
 </html>

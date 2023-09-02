@@ -77,10 +77,7 @@ if (isset($_GET['logout'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Online shop</title>
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="assets/fontawesome-free-6.4.0-web/css/all.css">
-  <link rel="stylesheet" href="assets/fontawesome-free-6.4.0-web/css/all.min.css">
-  <script src="assets/fontawesome-free-6.4.0-web/js/all.js"></script>
-  <script src="assets/fontawesome-free-6.4.0-web/js/all.min.js"></script>
+  <script src="https://kit.fontawesome.com/0ec3550c52.js" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 </head>
 
@@ -113,9 +110,6 @@ if (isset($_GET['logout'])) {
     echo "<small>&copy; Copyright $year, Online Shop</small>"
     ?>
   </footer>
-  <script>
-    // 
-  </script>
 </body>
 
 </html>

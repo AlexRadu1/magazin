@@ -187,24 +187,7 @@ if (isset($_SESSION['user_logged_in'])) {
       <input type="submit" name="submit" value="submit">
   </div>
   </form>
-  <script>
-    $(document).ready(function() {
-      $("input[name='date_facturare']").change(function() {
-        if ($(this).attr('id') == 'fact2') {
-          $('.showDiv').show();
-        } else {
-          $('.showDiv').hide();
-        }
-      });
-      $("input[name='payment_method']").change(function() {
-        if ($(this).attr('id') == 'card') {
-          $('.showDiv1').show();
-        } else {
-          $('.showDiv1').hide();
-        }
-      })
-    });
-  </script>
+  <script src="javascript.js"></script>
 </body>
 
 </html>

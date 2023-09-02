@@ -95,100 +95,37 @@ if (isset($_GET['logout'])) {
 <body>
   <?php include('includes/header.php') ?>
   <section id="main">
-    <nav class="sidebar">
-      <div class="text">
-        Categorii
+    <div class="container">
+      <div class="main-wrapper">
+        <nav class="sidebar">
+          <div class="text">
+            Categorii
+          </div>
+          <ul>
+            <?php
+            get_categories();
+            ?>
+          </ul>
+        </nav>
+        <div class="products">
+          <?php
+          if (isset($message)) {
+            foreach ($message as $message) {
+              echo "<div class='message' onclick='this.remove();'>" . $message . "</div>";
+            }
+          }
+          view_more();
+          get_unique_category_products();
+          get_unique_subcategory();
+          ?>
+        </div>
       </div>
-      <ul>
-        <?php
-        get_categories();
-        ?>
-      </ul>
-    </nav>
-    <div class="products">
-      <?php
-      if (isset($message)) {
-        foreach ($message as $message) {
-          echo "<div class='message' onclick='this.remove();'>" . $message . "</div>";
-        }
-      }
-      view_more();
-      get_unique_category_products();
-      get_unique_subcategory();
-      ?>
-    </div>
     </div>
   </section>
   <footer>
     <small>&copy; Copyright <?php echo date("Y") ?>, Bella Glam Chic</small>
   </footer>
-  <script>
-    const allImages = document.querySelectorAll('.option img');
-    const mainImageContainer = document.querySelector('.main_image');
-
-    window.addEventListener('DOMContentLoaded', () => {
-      allImages[0].classList.add('active');
-    });
-    allImages.forEach((image) => {
-      image.addEventListener('click', (event) => {
-        event.preventDefault()
-        mainImageContainer.querySelector('img').src = image.src;
-        resetActiveImg();
-        image.classList.add('active');
-      });
-    });
-
-    function resetActiveImg() {
-      allHoverImages.forEach((img) => {
-        img.classList.remove('active');
-      });
-    }
-
-    $(".color-select").change(function() {
-      let colorID = $(this).val();
-      let prodID = $(this).siblings('.product-id').val();
-      if (colorID) {
-        $.ajax({
-          url: "fetch_sizes.php",
-          dataType: 'Json',
-          data: {
-            'id': colorID,
-            'prod_id': prodID
-          },
-          success: function(data) {
-            $('.size-select').empty();
-            $.each(data, function(key, value) {
-              if (value[1] > 0) {
-                $('.size-select').append('<option value="' + key + '">' + value[0] + '</option>');
-              } else {
-                $('.size-select').append('<option disabled value="' + key + '">' + value[0] + '- Out of stock</option>');
-              }
-            })
-          }
-        });
-      }
-    });
-
-    const imgs = document.querySelectorAll('.img-select a');
-    const imgBtns = [...imgs];
-    let imgId = 1;
-
-    imgBtns.forEach((imgItem) => {
-      imgItem.addEventListener('click', (event) => {
-        event.preventDefault();
-        imgId = imgItem.dataset.id;
-        slideImage();
-      });
-    });
-
-    function slideImage() {
-      const displayWidth = document.querySelector('.img-showcase img:first-child').clientWidth;
-
-      document.querySelector('.img-showcase').style.transform = `translateX(${- (imgId - 1) * displayWidth}px)`;
-    }
-
-    window.addEventListener('resize', slideImage);
-  </script>
+  <script src="javascript.js"></script>
 </body>
 
 </html>

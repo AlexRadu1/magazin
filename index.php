@@ -76,8 +76,6 @@ if (isset($_GET['logout'])) {
   session_destroy();
   header('location:login.php');
 }
-
-//https://www.youtube.com/watch?v=ChBnZXtvCxc&t=872s
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -95,17 +93,7 @@ if (isset($_GET['logout'])) {
 <body>
   <?php include('includes/header.php') ?>
   <section id="main">
-    <nav class="sidebar">
-      <div class="text">
-        Categorii
-      </div>
-      <ul>
-        <?php
-        get_categories();
-        ?>
-      </ul>
-    </nav>
-    <div class="products">
+    <div class="container">
       <?php
       if (isset($message)) {
         foreach ($message as $message) {
@@ -113,69 +101,33 @@ if (isset($_GET['logout'])) {
         }
       }
       ?>
-      <div class="cards-container">
-        <?php
-        popup_card_product();
-        get_unique_category_products();
-        get_unique_subcategory();
-        ?>
+      <div class="main-wrapper">
+        <nav class="sidebar">
+          <div class="text">
+            Categorii
+          </div>
+          <ul>
+            <?php
+            get_categories();
+            ?>
+          </ul>
+        </nav>
+        <div class="products-container">
+          <div class="cards-container">
+            <?php
+            popup_card_product();
+            get_unique_category_products();
+            get_unique_subcategory();
+            ?>
+          </div>
+        </div>
       </div>
     </div>
   </section>
   <footer>
     <small>&copy; Copyright <?php echo date("Y") ?>, Bella Glam Chic</small>
   </footer>
-  <script>
-    var popupViews = document.querySelectorAll('.popup-view');
-    var popupBtns = document.querySelectorAll('.popup-btn');
-    var closeBtns = document.querySelectorAll('.close-btn');
-
-    //javascript for quick view button
-    var popup = (popupClick) => {
-      popupViews[popupClick].classList.add('active');
-    }
-
-    popupBtns.forEach((popupBtn, i) => {
-      popupBtn.addEventListener("click", () => {
-        popup(i);
-      });
-    });
-
-    //javascript for close button
-    closeBtns.forEach((closeBtn) => {
-      closeBtn.addEventListener("click", () => {
-        popupViews.forEach((popupView) => {
-          popupView.classList.remove('active');
-        });
-      });
-    });
-
-
-    $(".color-select").change(function() {
-      let colorID = $(this).val()
-      let prodID = $(this).siblings('.product-id').val()
-      if (colorID) {
-        $.ajax({
-          url: "fetch_sizes.php",
-          dataType: 'Json',
-          data: {
-            'id': colorID,
-            'prod_id': prodID
-          },
-          success: function(data) {
-            $('.size-select').empty();
-            $.each(data, function(key, value) {
-              if (value[1] > 0) {
-                $('.size-select').append('<option value="' + key + '">' + value[0] + '</option>')
-              } else {
-                $('.size-select').append('<option disabled value="' + key + '">' + value[0] + '- Out of stock</option>')
-              }
-            })
-          }
-        })
-      }
-    })
-  </script>
+  <script src="javascript.js"></script>
 </body>
 
 </html>

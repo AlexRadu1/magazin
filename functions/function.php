@@ -15,7 +15,7 @@ function popup_card_product()
         $product_image1 = $row['produs_imagine1'];
         $product_price  = $row['pret'];
         echo "
-        <form method='post'>
+        <form method='post' class='form-card'>
           <div class='product'>
             <div class='product-card'>
               <h2 class='product-name'>$product_title</h5>
@@ -99,7 +99,6 @@ function get_unique_category_products()
                 <img src='./admin_area/images/$product_image1' alt='$product_title'>
               </div>
               <div class='info'>
-                
                 <h2>$product_title</h2>
                 <div class='color-section'>
                   <label for='color-select'>Culoare:</label>
@@ -241,14 +240,14 @@ function get_subcategories($id)
   echo "<ul ";
   if (isset($_GET['category'])) {
     if ($_GET['category'] === $id) {
-      echo "style='display: block;'";
+      echo "style='display: flex; flex-direction:column;'";
     }
   }
   if (isset($_GET['subcategory'])) {
     $query = mysqli_query($con, "SELECT * FROM subcategorii WHERE ID={$_GET['subcategory']}");
     $row = mysqli_fetch_assoc($query);
     if ($id === $row['cod_categorie']) {
-      echo "style='display: block;'";
+      echo "style='display: flex; flex-direction:column;'";
     }
   }
   echo ">";
@@ -263,7 +262,7 @@ function get_subcategories($id)
 function search_product()
 {
   global $con;
-  if (isset($_GET['search_data_product'])) {
+  if (isset($_GET['search_data'])) {
     $search_data_value = $_GET['search_data'];
     $search_query = "SELECT * FROM `produse` WHERE keywords LIKE '%$search_data_value%'";
     $result_query = mysqli_query($con, $search_query);

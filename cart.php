@@ -1,5 +1,6 @@
 <?php
 include('includes/connect.php');
+include('functions/function.php');
 session_start();
 
 if (isset($_SESSION['user_logged_in'])) {
@@ -109,161 +110,193 @@ if (isset($_GET['logout'])) {
 
 <body>
   <?php include('includes/header.php') ?>
-  <div class="shopping-cart">
-    <?php
-    if (isset($message)) {
-      foreach ($message as $message) {
-        echo "<div class='message' onclick='this.remove();'>" . $message . "</div>";
+  <section class="shopping-cart">
+    <div class="container">
+      <?php
+      if (isset($message)) {
+        foreach ($message as $message) {
+          echo "<div class='message' onclick='this.remove();'>" . $message . "</div>";
+        }
       }
-    }
-    ?>
-    <h1 class="heading">shopping cart</h1>
-
-    <table>
-      <thead>
-        <th>image</th>
-        <th>name</th>
-        <th>price</th>
-        <th>quantity</th>
-        <th>total price</th>
-        <th>action</th>
-      </thead>
-      <tbody>
-        <?php if (isset($_SESSION['user_logged_in'])) {
-          $grand_total = 0;
-          $select_cart_query = "SELECT c.ID,c.user_id,c.quantity AS cantitate_cos, a.cod_produs, a.cod_marime, a.cod_culoare,p.denumire AS `name`,p.pret AS `price`,a.cantitate AS `quantity`,p.produs_imagine1 AS `image`,m.denumire AS denumireMarime,f.denumire AS denumireCuloare 
-          FROM cos c 
-          INNER JOIN atribute_produs a 
-          ON c.cod_atribut_produs = a.ID 
-          INNER JOIN produse p 
-          ON a.cod_produs = p.ID
-          INNER JOIN marimi m
-          ON a.cod_marime = m.ID
-          INNER JOIN culori f
-          ON a.cod_culoare = f.ID
-          WHERE c.user_id = $user_id";
-          $cart_query = mysqli_query($con, $select_cart_query) or die('query failed');
-          if (mysqli_num_rows($cart_query) > 0) {
-            while ($fetch_cart = mysqli_fetch_assoc($cart_query)) {
-        ?>
+      ?>
+      <h1 class="heading">shopping cart</h1>
+      <!-- TABLE START -->
+      <table class="cart-table">
+        <thead>
+          <th>image</th>
+          <th>name</th>
+          <th>price</th>
+          <th>quantity</th>
+          <th>total price</th>
+          <th>action</th>
+        </thead>
+        <tbody>
+          <?php if (isset($_SESSION['user_logged_in'])) {
+            $grand_total = 0;
+            $select_cart_query = "SELECT c.ID,c.user_id,c.quantity AS cantitate_cos, a.cod_produs, a.cod_marime, a.cod_culoare,p.denumire AS `name`,p.pret AS `price`,a.cantitate AS `quantity`,p.produs_imagine1 AS `image`,m.denumire AS denumireMarime,f.denumire AS denumireCuloare 
+            FROM cos c 
+            INNER JOIN atribute_produs a 
+            ON c.cod_atribut_produs = a.ID 
+            INNER JOIN produse p 
+            ON a.cod_produs = p.ID
+            INNER JOIN marimi m
+            ON a.cod_marime = m.ID
+            INNER JOIN culori f
+            ON a.cod_culoare = f.ID
+            WHERE c.user_id = $user_id";
+            $cart_query = mysqli_query($con, $select_cart_query) or die('query failed');
+            if (mysqli_num_rows($cart_query) > 0) {
+              while ($fetch_cart = mysqli_fetch_assoc($cart_query)) {
+          ?>
+                <tr>
+                  <td data-title="image">
+                    <div class="td-wrapper">
+                      <img src="admin_area/images/<?php echo $fetch_cart['image'] ?>" height="100px" alt="">
+                    </div>
+                  </td>
+                  <td data-title="name">
+                    <div class="td-wrapper"><?php echo "" . $fetch_cart['name'] . "<br>" . $fetch_cart['denumireCuloare'] . "<br>" . $fetch_cart['denumireMarime'] . "" ?></div>
+                  </td>
+                  <td data-title="price">
+                    <div class="td-wrapper"><?php echo $fetch_cart['price'] ?>lei</div>
+                  </td>
+                  <td data-title="quantity">
+                    <form action="" method="post" class="td-wrapper">
+                      <input type="hidden" name="cart_id" value="<?php echo $fetch_cart['ID'] ?>">
+                      <input type="hidden" name="size_id" value="<?php echo $fetch_cart['cod_marime'] ?>">
+                      <input type="hidden" name="prod_id" value="<?php echo $fetch_cart['cod_produs'] ?>">
+                      <input type="hidden" name="culoare_id" value="<?php echo $fetch_cart['cod_culoare'] ?>">
+                      <input type="number" min="1" name="cart_quantity" value="<?php echo $fetch_cart['cantitate_cos'] ?>">
+                      <input type="submit" name="update_cart" value="update" class="option-btn">
+                    </form>
+                  </td>
+                  <td data-title="Total price">
+                    <div class="td-wrapper"><?php echo $sub_total = $fetch_cart['price'] * $fetch_cart['cantitate_cos'] ?>lei</div>
+                  </td>
+                  <td data-title="action">
+                    <div class="td-wrapper"> <a href="cart.php?remove=<?php echo $fetch_cart['ID'] ?>" class="delete-btn" onclick="return confirm('Remove item from cart?');">Remove</a>
+                    </div>
+                  </td>
+                </tr>
+            <?php
+                $grand_total += $sub_total;
+              };
+            } else {
+              echo "<tr><td colspan='6' style='padding: 20px; text-transform:capitalize; text-align:center;'>no item added</td></tr>";
+            };
+            ?>
+            <tr class="table-bottom">
+              <td colspan="4" class="total">TOTAL: </td>
+              <td class="total-l"><?php echo $grand_total; ?>lei</td>
+              <td><a href="cart.php?delete_all" class="delete-btn <?php echo ($grand_total > 1) ? '' : 'disabled' ?>" onclick="return confirm('Delete all from cart?');">Delete all</a></td>
+            </tr>
+        </tbody>
+      </table>
+      <div class="cart-btn">
+        <a href="checkout.php" class="btn <?php echo ($grand_total > 1) ? '' : 'disabled' ?>">proceed to checkout</a>
+      </div>
+      <?php
+            if (isset($_SESSION['grand_total'])) {
+              $_SESSION['grand_total'] = $grand_total;
+            } else {
+              $_SESSION['grand_total'] = $grand_total;
+            }
+          } else {
+            $grand_total = 0;
+            if (isset($_SESSION['cart'])) {
+              $select_query = "SELECT * FROM `produse`";
+              $result_query = mysqli_query($con, $select_query);
+              while ($row = mysqli_fetch_assoc($result_query)) {
+                foreach ($_SESSION['cart'] as $key => $cart_item) {
+                  if ($row['ID'] == $cart_item['product_id']) {
+      ?>
+              <!-- html table body tr here -->
               <tr>
-                <td>
-                  <img src="admin_area/images/<?php echo $fetch_cart['image'] ?>" height="100px" alt="">
+                <td data-title="image">
+                  <div class="td-wrapper">
+                    <img src="admin_area/images/<?php echo $row['produs_imagine1'] ?>" height="100px" alt="">
+                  </div>
                 </td>
-                <td><?php echo "" . $fetch_cart['name'] . "<br>" . $fetch_cart['denumireCuloare'] . "<br>" . $fetch_cart['denumireMarime'] . "" ?></td>
-                <td><?php echo $fetch_cart['price'] ?>lei</td>
-                <td>
-                  <form action="" method="post">
-                    <input type="hidden" name="cart_id" value="<?php echo $fetch_cart['ID'] ?>">
-                    <input type="hidden" name="size_id" value="<?php echo $fetch_cart['cod_marime'] ?>">
-                    <input type="hidden" name="prod_id" value="<?php echo $fetch_cart['cod_produs'] ?>">
-                    <input type="hidden" name="culoare_id" value="<?php echo $fetch_cart['cod_culoare'] ?>">
-                    <input type="number" min="1" name="cart_quantity" value="<?php echo $fetch_cart['cantitate_cos'] ?>">
+                <td data-title="name">
+                  <div class="td-wrapper">
+                    <?php
+                    $size_query = "SELECT * FROM marimi WHERE ID=" . $cart_item['size'] . "";
+                    $marime_result = mysqli_query($con, $size_query);
+                    $culoare = "";
+                    while ($row_s = mysqli_fetch_assoc($marime_result)) {
+                      $culoare = $row_s['denumire'];
+                    }
+                    $color_query = "SELECT * FROM culori WHERE ID=" . $cart_item['color'] . "";
+                    $color_result = mysqli_query($con, $color_query);
+                    $size = "";
+                    while ($row_q = mysqli_fetch_assoc($color_result)) {
+                      $size = $row_q['denumire'];
+                    }
+                    echo "" . $row['denumire'] . "<br>" . $culoare . "<br>" . $size . "" ?>
+                  </div>
+                </td>
+                <td data-title="price">
+                  <div class="td-wrapper">
+                    <?php echo $row['pret'] ?>lei
+                  </div>
+                </td>
+                <td data-title="quantity">
+                  <form method="post" class="td-wrapper">
+
+                    <input type="hidden" name="product_id" value="<?php echo $cart_item['cod_atribut_produs'] ?>">
+                    <input type="number" min="1" name="cart_quantity" value="<?php echo $cant = $cart_item['quantity'] ?>">
                     <input type="submit" name="update_cart" value="update" class="option-btn">
                   </form>
                 </td>
-                <td><?php echo $sub_total = $fetch_cart['price'] * $fetch_cart['cantitate_cos'] ?>lei</td>
-                <td><a href="cart.php?remove=<?php echo $fetch_cart['ID'] ?>" class="delete-btn" onclick="return confirm('Remove item from cart?');">Remove</a>
+                <td data-title="total price">
+                  <div class="td-wrapper">
+                    <?php echo $sub_total = $row['pret'] * $cart_item['quantity'] ?>lei
+                  </div>
+                </td>
+                <td data-title="action">
+                  <div class="td-wrapper">
+                    <a href="cart.php?remove=<?php echo $key ?>" class="delete-btn" onclick="return confirm('Remove item from cart?');">Remove</a>
+                  </div>
                 </td>
               </tr>
-          <?php
-              $grand_total += $sub_total;
-            };
-          } else {
-            echo "<tr><td colspan='6' style='padding: 20px; text-transform:capitalize;'>no item added</td></tr>";
-          };
-          ?>
-          <tr class="table-bottom">
-            <td colspan="4" class="total">TOTAL: </td>
-            <td><?php echo $grand_total; ?>lei</td>
-            <td><a href="cart.php?delete_all" class="delete-btn <?php echo ($grand_total > 1) ? '' : 'disabled' ?>" onclick="return confirm('Delete all from cart?');">Delete all</a></td>
-          </tr>
-      </tbody>
-    </table>
-    <div class="cart-btn">
-      <a href="checkout.php" class="btn <?php echo ($grand_total > 1) ? '' : 'disabled' ?>">proceed to checkout</a>
-    </div>
-    <?php
-          if (isset($_SESSION['grand_total'])) {
-            $_SESSION['grand_total'] = $grand_total;
-          } else {
-            $_SESSION['grand_total'] = $grand_total;
-          }
-        } else {
-          $grand_total = 0;
-          if (isset($_SESSION['cart'])) {
-            $select_query = "SELECT * FROM `produse`";
-            $result_query = mysqli_query($con, $select_query);
-            while ($row = mysqli_fetch_assoc($result_query)) {
-              foreach ($_SESSION['cart'] as $key => $cart_item) {
-                if ($row['ID'] == $cart_item['product_id']) {
-
-    ?>
-            <!-- html table body tr here -->
-            <tr>
-              <td>
-                <img src="admin_area/images/<?php echo $row['produs_imagine1'] ?>" height="100px" alt="">
-              </td>
-              <td><?php
-                  $size_query = "SELECT * FROM marimi WHERE ID=" . $cart_item['size'] . "";
-                  $marime_result = mysqli_query($con, $size_query);
-                  $culoare = "";
-                  while ($row_s = mysqli_fetch_assoc($marime_result)) {
-                    $culoare = $row_s['denumire'];
+      <?php
+                    $grand_total += $sub_total;
                   }
-                  $color_query = "SELECT * FROM culori WHERE ID=" . $cart_item['color'] . "";
-                  $color_result = mysqli_query($con, $color_query);
-                  $size = "";
-                  while ($row_q = mysqli_fetch_assoc($color_result)) {
-                    $size = $row_q['denumire'];
-                  }
-                  echo "" . $row['denumire'] . "<br>" . $culoare . "<br>" . $size . "" ?></td>
-              <td><?php echo $row['pret'] ?>lei</td>
-              <td>
-                <form method="post">
-
-                  <input type="hidden" name="product_id" value="<?php echo $cart_item['cod_atribut_produs'] ?>">
-                  <input type="number" min="1" name="cart_quantity" value="<?php echo $cant = $cart_item['quantity'] ?>">
-                  <input type="submit" name="update_cart" value="update" class="option-btn">
-                </form>
-              </td>
-              <td><?php echo $sub_total = $row['pret'] * $cart_item['quantity'] ?>lei</td>
-              <td>
-                <a href="cart.php?remove=<?php echo $key ?>" class="delete-btn" onclick="return confirm('Remove item from cart?');">Remove</a>
-              </td>
-            </tr>
-    <?php
-                  $grand_total += $sub_total;
                 }
               }
+            } else {
+              echo "<tr><td colspan='6' style='padding: 20px; text-transform:capitalize; text-align:center;'>no item added</td></tr>";
             }
-          } else {
-            echo "<tr><td colspan='6' style='padding: 20px; text-transform:capitalize;'>no item added</td></tr>";
+      ?>
+      <tr class="table-bottom">
+        <td colspan="4" class="total">TOTAL: </td>
+        <td class="total-l"><?php echo $grand_total; ?>lei</td>
+        <td>
+          <div class="td-wrapper"><a href="cart.php?delete_all" class="delete-btn <?php echo ($grand_total > 1) ? '' : 'disabled' ?>" onclick="return confirm('Delete all from cart?');">Delete all</a></div>
+        </td>
+      </tr>
+      </tbody>
+      </table>
+      <!-- TABLE END -->
+      <div class="cart-btn">
+
+        <a href="checkout.php" class="btn <?php echo ($grand_total > 1) ? '' : 'disabled' ?>">proceed to checkout</a>
+      </div>
+
+    <?php
+            if (isset($_SESSION['grand_total'])) {
+              $_SESSION['grand_total'] = $grand_total;
+            } else {
+              $_SESSION['grand_total'] = $grand_total;
+            }
           }
     ?>
-    <tr class="table-bottom">
-      <td colspan="4" class="total">TOTAL: </td>
-      <td><?php echo $grand_total; ?>lei</td>
-      <td><a href="cart.php?delete_all" class="delete-btn <?php echo ($grand_total > 1) ? '' : 'disabled' ?>" onclick="return confirm('Delete all from cart?');">Delete all</a></td>
-    </tr>
-    </tbody>
-    </table>
-    <div class="cart-btn">
-      <a href="checkout.php" class="btn <?php echo ($grand_total > 1) ? '' : 'disabled' ?>">proceed to checkout</a>
-    </div>
-
-  <?php
-          if (isset($_SESSION['grand_total'])) {
-            $_SESSION['grand_total'] = $grand_total;
-          } else {
-            $_SESSION['grand_total'] = $grand_total;
-          }
-        }
-  ?>
-  </div>
+    </div><!-- class="container" end div -->
+  </section><!-- class="shopping-cart" end div -->
   <footer>
     <small>&copy; Copyright <?php echo date("Y") ?>, Bella Glam Chic</small>
   </footer>
+  <script src="javascript.js"></script>
 </body>
 
 </html>
