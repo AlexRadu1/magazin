@@ -182,13 +182,13 @@ if (isset($_GET['logout'])) {
                 $grand_total += $sub_total;
               };
             } else {
-              echo "<tr><td colspan='6' style='padding: 20px; text-transform:capitalize; text-align:center;'>no item added</td></tr>";
+              echo "<tr><td colspan='6' class='no-background' style='padding: 20px; text-transform:capitalize; text-align:center;'>no item added</td></tr>";
             };
             ?>
             <tr class="table-bottom">
               <td colspan="4" class="total">TOTAL: </td>
-              <td class="total-l"><?php echo $grand_total; ?>lei</td>
-              <td><a href="cart.php?delete_all" class="delete-btn <?php echo ($grand_total > 1) ? '' : 'disabled' ?>" onclick="return confirm('Delete all from cart?');">Delete all</a></td>
+              <td class="total align-left"><?php echo $grand_total; ?>lei</td>
+              <td class="total align-left"><a href="cart.php?delete_all" class="delete-btn <?php echo ($grand_total > 1) ? '' : 'disabled' ?>" onclick="return confirm('Delete all from cart?');">Delete all</a></td>
             </tr>
         </tbody>
       </table>
@@ -242,7 +242,6 @@ if (isset($_GET['logout'])) {
                 </td>
                 <td data-title="quantity">
                   <form method="post" class="td-wrapper">
-
                     <input type="hidden" name="product_id" value="<?php echo $cart_item['cod_atribut_produs'] ?>">
                     <input type="number" min="1" name="cart_quantity" value="<?php echo $cant = $cart_item['quantity'] ?>">
                     <input type="submit" name="update_cart" value="update" class="option-btn">
@@ -265,13 +264,13 @@ if (isset($_GET['logout'])) {
                 }
               }
             } else {
-              echo "<tr><td colspan='6' style='padding: 20px; text-transform:capitalize; text-align:center;'>no item added</td></tr>";
+              echo "<tr><td colspan='6' class='no-background' style='padding: 20px; text-transform:capitalize; text-align:center;'>no item added</td></tr>";
             }
       ?>
       <tr class="table-bottom">
         <td colspan="4" class="total">TOTAL: </td>
-        <td class="total-l"><?php echo $grand_total; ?>lei</td>
-        <td>
+        <td class="total align-left"><?php echo $grand_total; ?>lei</td>
+        <td class="total align-right">
           <div class="td-wrapper"><a href="cart.php?delete_all" class="delete-btn <?php echo ($grand_total > 1) ? '' : 'disabled' ?>" onclick="return confirm('Delete all from cart?');">Delete all</a></div>
         </td>
       </tr>
@@ -279,10 +278,8 @@ if (isset($_GET['logout'])) {
       </table>
       <!-- TABLE END -->
       <div class="cart-btn">
-
         <a href="checkout.php" class="btn <?php echo ($grand_total > 1) ? '' : 'disabled' ?>">proceed to checkout</a>
       </div>
-
     <?php
             if (isset($_SESSION['grand_total'])) {
               $_SESSION['grand_total'] = $grand_total;

@@ -77,14 +77,30 @@ if (isset($_GET['id_factura'])) {
             while ($row = mysqli_fetch_assoc($result_query)) {
             ?>
               <tr>
-                <td><?= $row['produs_ID'] ?></td>
-                <td><img src="images/<?= $row['produs_imagine1'] ?>" alt=""></td>
-                <td><?= $row['nume_produs'] ?></td>
-                <td><?= $row['nume_marime'] ?></td>
-                <td><?= $row['nume_culoare'] ?></td>
-                <td><?= $row['pret_unitar'] ?></td>
-                <td><?= $row['cantitate'] ?></td>
-                <td><?= $row['pret_unitar'] * $row['cantitate'] ?></td>
+                <td data-title="ID">
+                  <div class="td-wrapper"><?= $row['produs_ID'] ?></div>
+                </td>
+                <td data-title="Poza">
+                  <div class="td-wrapper"><img src="images/<?= $row['produs_imagine1'] ?>" alt=""></div>
+                </td>
+                <td data-title="Nume">
+                  <div class="td-wrapper"><?= $row['nume_produs'] ?></div>
+                </td>
+                <td data-title="Size">
+                  <div class="td-wrapper"><?= $row['nume_marime'] ?></div>
+                </td>
+                <td data-title="Color">
+                  <div class="td-wrapper"><?= $row['nume_culoare'] ?></div>
+                </td>
+                <td data-title="Pret unitar">
+                  <div class="td-wrapper"><?= $row['pret_unitar'] ?></div>
+                </td>
+                <td data-title="Cantitate">
+                  <div class="td-wrapper"><?= $row['cantitate'] ?></div>
+                </td>
+                <td data-title="Pret total">
+                  <div class="td-wrapper"><?= $row['pret_unitar'] * $row['cantitate'] ?></div>
+                </td>
               </tr>
             <?php
               $total += $row['pret_unitar'] * $row['cantitate'];
@@ -92,7 +108,7 @@ if (isset($_GET['id_factura'])) {
             ?>
             <tr class="table-bottom">
               <td colspan="7" class="total">TOTAL: </td>
-              <td><?= $total ?></td>
+              <td class="total align-left"><?= $total ?></td>
             </tr>
           </tbody>
         </table>
@@ -100,6 +116,7 @@ if (isset($_GET['id_factura'])) {
 
     </div>
   </div>
+  <script src="javascript.js" defer></script>
 </body>
 
 </html>

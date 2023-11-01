@@ -75,14 +75,30 @@ if (isset($_POST['submit'])) {
             while ($row = mysqli_fetch_assoc($result_query)) {
             ?>
               <tr>
-                <td><?= $row['produs_ID'] ?></td>
-                <td><img src="images/<?= $row['produs_imagine1'] ?>" alt=""></td>
-                <td><?= $row['denumire'] ?></td>
-                <td><?= $row['marime_denumire'] ?></td>
-                <td><?= $row['culoare_denumire'] ?></td>
-                <td><?= $row['pret_unitar'] ?></td>
-                <td><?= $row['cantitate_produs'] ?></td>
-                <td><?= $row['pret_row'] ?></td>
+                <td data-title="ID">
+                  <div class="td-wrapper"><?= $row['produs_ID'] ?></div>
+                </td>
+                <td data-title="Poza">
+                  <div class="td-wrapper"><img src="images/<?= $row['produs_imagine1'] ?>" alt=""></div>
+                </td>
+                <td data-title="Nume">
+                  <div class="td-wrapper"><?= $row['denumire'] ?></div>
+                </td>
+                <td data-title="Size">
+                  <div class="td-wrapper"><?= $row['marime_denumire'] ?></div>
+                </td>
+                <td data-title="Color">
+                  <div class="td-wrapper"><?= $row['culoare_denumire'] ?></div>
+                </td>
+                <td data-title="Pret unitar">
+                  <div class="td-wrapper"><?= $row['pret_unitar'] ?></div>
+                </td>
+                <td data-title="Cantitate">
+                  <div class="td-wrapper"><?= $row['cantitate_produs'] ?></div>
+                </td>
+                <td data-title="Pret total">
+                  <div class="td-wrapper"><?= $row['pret_row'] ?></div>
+                </td>
               </tr>
             <?php
               $total += $row['pret_row'];
@@ -125,6 +141,7 @@ if (isset($_POST['submit'])) {
       </div>
     </div>
   </div>
+  <script src="javascript.js" defer></script>
 </body>
 
 </html>

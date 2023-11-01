@@ -92,7 +92,7 @@ if (isset($_GET['logout'])) {
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 </head>
 
-<body>
+<body class="prod-page">
   <?php include('includes/header.php') ?>
   <section id="main">
     <div class="container">

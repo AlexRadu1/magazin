@@ -1,45 +1,92 @@
 <header class="header">
   <div class="container">
     <button class="nav-toggle" aria-label="open navigation">
-      <span class="hamburger"></span>
+      <i class="fa-solid fa-bars hamburger"></i>
     </button>
     <nav class="navbar-main">
-      <ul class="nav_links">
-        <li><a href="cart.php"><i class="fa-solid fa-cart-shopping"></i></a><sup>
-            <?php
-            if (isset($_SESSION['user_logged_in'])) {
-              $cart_query = mysqli_query($con, "SELECT * FROM `cos` WHERE user_id = $user_id") or die('query failed');
-              if (mysqli_num_rows($cart_query) > 0) {
-                $prod_cnt = 0;
-                while ($row_cnt = mysqli_fetch_assoc($cart_query)) {
-                  $prod_cnt += $row_cnt['quantity'];
-                }
-                echo $prod_cnt;
-              }
-            } else {
-              if (isset($_SESSION['cart'])) {
-                $prod_cnt = 0;
-                foreach ($_SESSION['cart'] as  $cart_item) {
-                  $prod_cnt += $cart_item['quantity'];
-                }
-                echo $prod_cnt;
-              }
-            }
-            ?></sup></li>
-        <?php if (isset($_SESSION['user_logged_in'])) : ?>
-          <?php if (isset($_SESSION['admin'])) echo  "<li><a href='admin_area/index.php' class='l-button'>Admin Area</a></li>" ?>
-          <li><a href="account.php"><i class="fa-solid fa-user"></i></a></li>
-          <li><a href="?logout" class="" onclick="return confirm('are you sure you want to logout?')"><i class="fa-solid fa-right-from-bracket"></i></a></li>
-        <?php else : ?>
-          <li><a href="register.php" class="l-button"><i class="fa-solid fa-user-plus"></i></a></li>
-          <li><a href="login.php" class="l-button"><i class="fa-solid fa-right-to-bracket"></i></a></li>
-        <?php endif; ?>
-      </ul>
-      <ul class="nav_categories">
-        <?php
-        get_categories();
-        ?>
-      </ul>
+      <div class="container">
+        <ul class="nav_links">
+          <li>
+            <div class="label-picture-container">
+              <a href="cart.php">
+                <div class="icon-padding">
+                  <i class="fa-solid fa-cart-shopping"></i>
+                  <sup>
+                    <?php
+                    if (isset($_SESSION['user_logged_in'])) {
+                      $cart_query = mysqli_query($con, "SELECT * FROM `cos` WHERE user_id = $user_id") or die('query failed');
+                      if (mysqli_num_rows($cart_query) > 0) {
+                        $prod_cnt = 0;
+                        while ($row_cnt = mysqli_fetch_assoc($cart_query)) {
+                          $prod_cnt += $row_cnt['quantity'];
+                        }
+                        echo $prod_cnt;
+                      }
+                    } else {
+                      if (isset($_SESSION['cart'])) {
+                        $prod_cnt = 0;
+                        foreach ($_SESSION['cart'] as  $cart_item) {
+                          $prod_cnt += $cart_item['quantity'];
+                        }
+                        echo $prod_cnt;
+                      }
+                    }
+                    ?>
+                  </sup>
+                </div>
+                <span class="nav-links-label">cart</span>
+              </a>
+            </div>
+          </li>
+          <?php if (isset($_SESSION['user_logged_in'])) : ?>
+            <?php if (isset($_SESSION['admin'])) echo  "
+            <li>
+              <div class='label-picture-container'>
+                <a href='admin_area/index.php'>
+                  <div class='icon-padding'><i class='fa-solid fa-desktop'></i></div>
+                  <span class='nav-links-label'>Admin</span>
+                </a>
+              </div>
+            </li>" ?>
+            <li>
+              <div class="label-picture-container">
+                <a href="account.php">
+                  <div class="icon-padding"><i class="fa-solid fa-user"></i></div>
+                  <span class="nav-links-label">cont</span>
+                </a>
+              </div>
+            </li>
+            <li>
+              <div class="label-picture-container">
+                <a href="?logout" class="" onclick="return confirm('are you sure you want to logout?')">
+                  <div class="icon-padding"><i class="fa-solid fa-right-from-bracket"></i></div>
+                  <span class="nav-links-label">Logout</span>
+                </a>
+              </div>
+            </li>
+          <?php else : ?>
+            <li>
+              <div class="label-picture-container">
+                <a href="register.php">
+                  <div class="icon-padding"><i class="fa-solid fa-user-plus"></i></div>
+                  <span class="nav-links-label">Register</span>
+                </a>
+              </div>
+            </li>
+            <li>
+              <a href="login.php">
+                <div class="icon-padding"><i class="fa-solid fa-right-to-bracket"></i></div>
+                <span class="nav-links-label">login</span>
+              </a>
+            </li>
+          <?php endif; ?>
+        </ul>
+        <ul class="nav_categories">
+          <?php
+          get_categories();
+          ?>
+        </ul>
+      </div>
     </nav>
     <a href="index.php" class="logo">
       <img src="./poze/logo.png" alt="clothing hanger">

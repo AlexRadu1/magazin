@@ -4,7 +4,6 @@ if (!isset($_SESSION['admin']) && !$_SESSION['admin']) {
   header("location:../index.php");
 }
 
-
 if (isset($_POST['save'])) {
   $serie_fact = mysqli_real_escape_string($con, $_POST['serie_fact']);
   $nr_fact = mysqli_real_escape_string($con, $_POST['nr_fact']);
@@ -83,7 +82,7 @@ if (isset($_POST['save'])) {
           </div>
           <div class="form-box">
             <label for="furnizor_fact">Furnizor</label>
-            <select name="furnizor_fact" id="">
+            <select name="furnizor_fact" id="furnizor_fact">
               <option value="">Select furnizor</option>
               <?php
               $select_query = "SELECT * FROM furnizori";
@@ -117,55 +116,71 @@ if (isset($_POST['save'])) {
             <th>marime</th>
             <th>culoare</th>
             <th>pret_unitar</th>
-            <th>Add or Remove</th>
+            <th>Options</th>
           </thead>
           <tbody id="table-body">
             <tr class="table-row">
-              <td>
-                <select name="txt_Produs[]">
-                  <option value="">Select a category</option>
-                  <?php
-                  $select_query = "SELECT * FROM produse";
-                  $result_query = mysqli_query($con, $select_query);
-                  while ($row = mysqli_fetch_assoc($result_query)) {
-                    $category_title = $row['denumire'];
-                    $category_id = $row['ID'];
-                    echo "<option value=$category_id>$category_title</option>";
-                  }
-                  ?>
-                </select>
+              <td data-title="Produs">
+                <div class="td-wrapper">
+                  <select class="selectProdus js-example-basic-single" name="txt_Produs[]">
+                    <option value="0">Select a category</option>
+                    <?php
+                    $select_query = "SELECT * FROM produse";
+                    $result_query = mysqli_query($con, $select_query);
+                    while ($row = mysqli_fetch_assoc($result_query)) {
+                      $category_title = $row['denumire'];
+                      $category_id = $row['ID'];
+                      echo "<option value=$category_id>$category_title</option>";
+                    }
+                    ?>
+                  </select>
+                </div>
               </td>
-              <td><input type="text" name="txt_Cant[]" required="required"></td>
-              <td>
-                <select name="txt_Marime[]">
-                  <option value="">Select a category</option>
-                  <?php
-                  $select_query = "SELECT * FROM marimi";
-                  $result_query = mysqli_query($con, $select_query);
-                  while ($row = mysqli_fetch_assoc($result_query)) {
-                    $category_title = $row['denumire'];
-                    $category_id = $row['ID'];
-                    echo "<option value=$category_id>$category_title</option>";
-                  }
-                  ?>
-                </select>
+              <td data-title="Cantitate">
+                <div class="td-wrapper"><input type="text" name="txt_Cant[]" class="inputCantitate" required="required"></div>
               </td>
-              <td>
-                <select name="txt_culoare[]">
-                  <option value="">Select a category</option>
-                  <?php
-                  $select_query = "SELECT * FROM culori";
-                  $result_query = mysqli_query($con, $select_query);
-                  while ($row = mysqli_fetch_assoc($result_query)) {
-                    $category_title = $row['denumire'];
-                    $category_id = $row['ID'];
-                    echo "<option value=$category_id>$category_title</option>";
-                  }
-                  ?>
-                </select>
+              <td data-title="Marime">
+                <div class="td-wrapper">
+                  <select class="selectMarime" name="txt_Marime[]">
+                    <option value="0">Select a category</option>
+                    <?php
+                    $select_query = "SELECT * FROM marimi";
+                    $result_query = mysqli_query($con, $select_query);
+                    while ($row = mysqli_fetch_assoc($result_query)) {
+                      $category_title = $row['denumire'];
+                      $category_id = $row['ID'];
+                      echo "<option value=$category_id>$category_title</option>";
+                    }
+                    ?>
+                  </select>
+                </div>
               </td>
-              <td><input type="text" name="txt_Pret[]" required="required"></td>
-              <td><input type="button" name="add" id="add" value="Add"></td>
+              <td data-title="Culoare">
+                <div class="td-wrapper">
+                  <select class="selectCuloare" name="txt_culoare[]">
+                    <option value="0">Select a category</option>
+                    <?php
+                    $select_query = "SELECT * FROM culori";
+                    $result_query = mysqli_query($con, $select_query);
+                    while ($row = mysqli_fetch_assoc($result_query)) {
+                      $category_title = $row['denumire'];
+                      $category_id = $row['ID'];
+                      echo "<option value=$category_id>$category_title</option>";
+                    }
+                    ?>
+                  </select>
+                </div>
+              </td>
+              <td data-title="Pret">
+                <div class="td-wrapper"><input type="text" class="inputPret" name="txt_Pret[]" required="required"></div>
+              </td>
+              <td data-title="optiuni">
+                <div class="td-wrapper">
+                  <input type="button" name="add" id="add" class="add" value="Add">
+                  <input type="button" name="copy" class="copy" value="Copy">
+                  <input type="button" name="remove" class="remove" value="Remove">
+                </div>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -174,77 +189,7 @@ if (isset($_POST['save'])) {
         </div>
       </form>
     </div>
-
-
-
-    <script>
-      function loadRow() {
-        let xhr = new XMLHttpRequest();
-        xhr.open('GET', 'fetch_products.php', true);
-        xhr.onload = function() {
-          if (this.status == 200) {
-            let options = JSON.parse(this.responseText);
-            let output = '';
-            for (let i in options['prod']) {
-              output += '<option value="' + options['prod'][i].ID + '">' + options['prod'][i].denumire + '</option>';
-            }
-            let output2 = '';
-            for (let i in options['marimi']) {
-              output2 += '<option value="' + options['marimi'][i].ID + '">' + options['marimi'][i].denumire + '</option>';
-            }
-            let output3 = '';
-            for (let i in options['culori']) {
-              output3 += '<option value="' + options['culori'][i].ID + '">' + options['culori'][i].denumire + '</option>';
-            }
-            let html = ``;
-            html += '<tr>' +
-              '<td><select name="txt_Produs[]" id="produs_input">' +
-              '<option value="">Select a category</option>' + output +
-              '</select></td>' +
-              '<td><input type="text" name="txt_Cant[]" required="required"></td>' +
-              '<td>' +
-              '<select name="txt_Marime[]">' +
-              '<option value="">Select a category</option>' + output2 +
-              '</select>' +
-              '</td>' +
-              '<td>' +
-              '<select name="txt_culoare[]">' +
-              '<option value="">Select a category</option>' + output3 +
-              '</select>' +
-              '</td>' +
-              '<td><input type="text" name="txt_Pret[]" required="required"></td>' +
-              '<td><input type="button" name="remove" id="remove" value="remove"></td>' +
-              '</tr>';
-            $('#table-body').append(html);
-          }
-        }
-        xhr.send();
-      }
-
-      function getSize() {
-        let xhr = new XMLHttpRequest();
-        xhr.open('GET', 'fetch_size.php', true);
-        xhr.onload = function() {
-          if (this.status == 200) {
-            var options = JSON.parse(this.responseText);
-            console.log(options);
-            var output = '';
-            // for (let i in options) {
-            //   output += '<option value="' + options[i].ID + '">' + options[i].denumire + '</option>';
-            // }
-          }
-        }
-        xhr.send();
-      }
-      $(document).ready(function() {
-        $('#add').click(function() {
-          loadRow();
-        });
-        $("#table_field").on('click', '#remove', function() {
-          $(this).closest('tr').remove();
-        });
-      });
-    </script>
+    <script src="javascript.js" defer></script>
 </body>
 
 </html>

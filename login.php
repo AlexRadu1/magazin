@@ -71,6 +71,7 @@ if (isset($_POST['submit'])) {
       <p>Don't have an account? <a href="register.php"> Register now</a></p>
     </form>
   </div>
+  <script src="javascript.js"></script>
 </body>
 
 </html>

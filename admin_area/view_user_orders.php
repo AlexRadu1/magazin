@@ -48,14 +48,30 @@ if (isset($_GET['user_id']) && $_GET['user_id'] != '') {
           while ($row = mysqli_fetch_assoc($user_query)) {
           ?>
             <tr>
-              <td><?= $row['id_coamanda'] ?></td>
-              <td><?= $row['data'] ?></td>
-              <td><?= $row['nume'] . " " . $row['prenume'] ?></td>
-              <td><?= $row['telefon'] ?></td>
-              <td><?= $row['adresa'] . "," . $row['localitate'] /* TODO: si judete */ ?></td>
-              <td><?= $row['pret_total'] ?> RON</td>
-              <td><?= $row['denumire'] ?></td>
-              <td><a href="order_details.php?id_comanda=<?= $row['id_coamanda'] ?>" class="buttons">Detalii</a></td>
+              <td data-title="ID comanda">
+                <div class="td-wrapper"><?= $row['id_coamanda'] ?></div>
+              </td>
+              <td data-title="Data">
+                <div class="td-wrapper"><?= $row['data'] ?></div>
+              </td>
+              <td data-title="Nume client">
+                <div class="td-wrapper"><?= $row['nume'] . " " . $row['prenume'] ?></div>
+              </td>
+              <td data-title="Telefon">
+                <div class="td-wrapper"><?= $row['telefon'] ?></div>
+              </td>
+              <td data-title="Adresa">
+                <div class="td-wrapper"><?= $row['adresa'] . "," . $row['localitate'] /* TODO: si judete */ ?></div>
+              </td>
+              <td data-title="Total comanda">
+                <div class="td-wrapper"><?= $row['pret_total'] ?> RON</div>
+              </td>
+              <td data-title="Status comanda">
+                <div class="td-wrapper"><?= $row['denumire'] ?></div>
+              </td>
+              <td data-title="Detalii comanda">
+                <div class="td-wrapper"><a href="order_details.php?id_comanda=<?= $row['id_coamanda'] ?>" class="buttons">Detalii</a></div>
+              </td>
             </tr>
           <?php
           }
@@ -66,6 +82,7 @@ if (isset($_GET['user_id']) && $_GET['user_id'] != '') {
 
     </div>
   </div>
+  <script src="javascript.js" defer></script>
 </body>
 
 </html>

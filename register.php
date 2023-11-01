@@ -57,7 +57,7 @@ if (isset($_POST['submit'])) {
       <img class="logo" src="./poze/logo.png" alt="shop-logo">
     </a>
     <form action="" method="post">
-      <h3>Register now</h3>
+      <h1>Register now</h1>
       <input type="text" name="name" required placeholder="enter username*" class="form-box">
       <input type="email" name="email" required placeholder="enter email*" class="form-box">
       <input type="password" name="password" required placeholder="enter password*" class="form-box">
@@ -84,6 +84,7 @@ if (isset($_POST['submit'])) {
       <p>Already have an account? <a href="login.php"> Login now</a></p>
     </form>
   </div>
+  <script src="javascript.js"></script>
 </body>
 
 </html>

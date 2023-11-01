@@ -182,7 +182,7 @@ if (isset($_POST['submit'])) {
             <div class="form-group">
               <div class="group-row">
                 <label for="product-price">Pret produs</label>
-                <input type="number" name="price" id="product-price" value="<?php if (isset($_GET['id']) && $_GET['id'] != '') echo $prod_info['pret'] ?>">
+                <input type="number" step="0.01" name="price" id="product-price" value="<?php if (isset($_GET['id']) && $_GET['id'] != '') echo $prod_info['pret'] ?>">
               </div>
             </div>
             <div class="form-group">
@@ -318,11 +318,6 @@ if (isset($_POST['submit'])) {
     </div>
   </div>
 
-
-
-
-
-
   <script>
     function get_sub_cat(sub_cat_id) {
       let category_id = $('#product-category').val()
@@ -387,6 +382,7 @@ if (isset($_POST['submit'])) {
       })
     }
   </script>
+  <script src="javascript.js" defer></script>
 </body>
 
 </html>

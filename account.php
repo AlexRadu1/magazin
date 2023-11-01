@@ -44,71 +44,96 @@ if (isset($_POST['submit'])) {
 
 <body>
   <?php include("includes/header.php") ?>
-  <div class="wrapper">
-    <div class="account-menu">
-      <h2>Detalii cont</h2>
-      <ul>
-        <li><a href="account.php">Date presonale</a></li>
-        <li><a href="orders.php">Istoric comenzi</a></li>
-      </ul>
-    </div>
-    <div class="container">
+  <section class="margin-top">
+    <div class="container flex-content">
+      <div class="account-menu">
+        <ul>
+          <li>
+            <a href="account.php" class="user-menu-cards">
+              <span class="icon">
+                <img src="poze/businessman-svgrepo-com.svg" alt="Setari cont" height="30px" width="30px">
+              </span>
+              <span class="title">
+                Date personale
+              </span>
+              <i class="fa-solid fa-caret-right"></i>
+            </a>
+          </li>
+          <li><a href="orders.php" class="user-menu-cards">
+              <span class="icon">
+                <img src="poze/clipboard-list-svgrepo-com.svg" alt="Lista comenzi" height="30px" width="30px">
+              </span>
+              <span class="title">
+                Istoric comenzi
+              </span>
+              <i class="fa-solid fa-caret-right"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
       <div class="account-detail">
         <h1>Welcome <?= $user_data['username'] ?>!</h1>
-        <form action="" method="post">
-          <div class="form-row">
-            <div class="form-col half">
-              <label for="nume">Nume</label>
-              <input type="text" value="<?= $user_data['nume'] ?>" name="nume" id="nume">
-            </div>
-            <div class="form-col half">
-              <label for="prenume">Prenume</label>
-              <input type="text" value="<?= $user_data['prenume'] ?>" name="prenume" id="prenume">
-            </div>
+        <div class="large-columns">
+          <div class="fact-info">
+            <h2>Date facturare</h2>
+            <p>Datele completate mai jos vor fii folosite pentru a finaliza comenzi! </p>
           </div>
-          <div class="form-row">
-            <div class="form-col">
-              <label for="adresa">Adresa</label>
-              <textarea name="adresa" id="adresa" rows="6" cols="50"><?= $user_data['adresa'] ?></textarea>
+          <form action="" method="post">
+            <div class="form-row">
+              <div class="form-col half">
+                <label for="nume">Nume</label>
+                <input type="text" value="<?= $user_data['nume'] ?>" name="nume" id="nume">
+              </div>
+              <div class="form-col half">
+                <label for="prenume">Prenume</label>
+                <input type="text" value="<?= $user_data['prenume'] ?>" name="prenume" id="prenume">
+              </div>
             </div>
-          </div>
-          <div class="form-row">
-            <div class="form-col half">
-              <label for="judet">Judet</label>
-              <select name="judet" id="judet">
-                <?php
-                $cod_judet = $user_data['cod_judet'];
-                $jud_q = mysqli_query($con, "SELECT * FROM judete");
-                while ($row_j = mysqli_fetch_assoc($jud_q)) {
-                ?>
-                  <option value="<?= $row_j['ID'] ?>" <?php echo ($cod_judet == $row_j['ID']) ? "selected" : "" ?>><?= $row_j['denumire'] ?></option>
-                <?php
-                }
-                ?>
-              </select>
+            <div class="form-row">
+              <div class="form-col">
+                <label for="adresa">Adresa</label>
+                <textarea name="adresa" id="adresa"><?= $user_data['adresa'] ?></textarea>
+              </div>
             </div>
-            <div class="form-col half">
-              <label for="oras">Oras</label>
-              <input type="text" value="<?= $user_data['Oras'] ?>" name="oras" id="oras">
+            <div class="form-row">
+              <div class="form-col half">
+                <label for="judet">Judet</label>
+                <select name="judet" id="judet">
+                  <?php
+                  $cod_judet = $user_data['cod_judet'];
+                  $jud_q = mysqli_query($con, "SELECT * FROM judete");
+                  while ($row_j = mysqli_fetch_assoc($jud_q)) {
+                  ?>
+                    <option value="<?= $row_j['ID'] ?>" <?php echo ($cod_judet == $row_j['ID']) ? "selected" : "" ?>><?= $row_j['denumire'] ?></option>
+                  <?php
+                  }
+                  ?>
+                </select>
+              </div>
+              <div class="form-col half">
+                <label for="oras">Oras</label>
+                <input type="text" value="<?= $user_data['Oras'] ?>" name="oras" id="oras">
+              </div>
             </div>
-          </div>
-          <div class="form-row">
-            <div class="form-col">
-              <label for="zipcode">Cod postal(vezi <a href="https://www.posta-romana.ro/cauta-cod-postal.html" target="_blank" rel="noopener noreferrer">Posta roamana</a> )</label>
-              <input type="text" value="<?= $user_data['zipcode'] ?>" name="zipcode" id="zipcode">
+            <div class="form-row">
+              <div class="form-col">
+                <label for="zipcode">Cod postal(vezi <a href="https://www.posta-romana.ro/cauta-cod-postal.html" target="_blank" rel="noopener noreferrer">Posta roamana</a> )</label>
+                <input type="text" value="<?= $user_data['zipcode'] ?>" name="zipcode" id="zipcode">
+              </div>
             </div>
-          </div>
-          <div class="form-row">
-            <div class="form-col">
-              <label for="telefon">Telefon</label>
-              <input type="text" value="<?= $user_data['telefon'] ?>" name="telefon" id="telefon">
+            <div class="form-row">
+              <div class="form-col">
+                <label for="telefon">Telefon</label>
+                <input type="text" value="<?= $user_data['telefon'] ?>" name="telefon" id="telefon">
+              </div>
             </div>
-          </div>
-          <input type="submit" name="submit" value="Update">
-        </form>
+            <input type="submit" name="submit" value="Update" class="submit-button">
+          </form>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
+  <script src="javascript.js"></script>
 </body>
 
 </html>

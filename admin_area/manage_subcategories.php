@@ -65,7 +65,6 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
             <option value="<?= $rsq['ID'] ?>" <?php if (isset($_GET['id']) && $subcat_info['ID'] == $rsq['ID']) echo "selected" ?>><?= $rsq['denumire'] ?></option>
           <?php
           }
-
           ?>
         </select>
         <label for="cat_name">Nume subcategorie: </label>
@@ -76,6 +75,7 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
       </form>
     </div>
   </div>
+  <script src="javascript.js" defer></script>
 </body>
 
 </html>

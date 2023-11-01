@@ -48,16 +48,32 @@ if (isset($_GET['remove']) && $_GET['remove'] != '') {
           while ($row = mysqli_fetch_assoc($q)) {
           ?>
             <tr>
-              <td><?= $row['ID'] ?></td>
-              <td><?= $row['nume_furnizor'] ?></td>
-              <td><?= $row['adresa'] ?></td>
-              <td><?= $row['nume_judet'] ?></td>
-              <td><?= $row['Banca'] ?></td>
-              <td><?= $row['IBAN'] ?></td>
-              <td><?= $row['CIF'] ?></td>
-              <td>
-                <a href="manage_providers.php?id=<?= $row['ID'] ?>" class="buttons">Edit</a>
-                <a href="?remove=<?= $row['ID'] ?>" class="buttons danger" onclick="return confirm('Are you sure you want to delete <?= $row['nume_furnizor'] ?>')">Remove</a>
+              <td data-title="ID">
+                <div class="td-wrapper"><?= $row['ID'] ?></div>
+              </td>
+              <td data-title="Nume">
+                <div class="td-wrapper"><?= $row['nume_furnizor'] ?></div>
+              </td>
+              <td data-title="Adresa">
+                <div class="td-wrapper"><?= $row['adresa'] ?></div>
+              </td>
+              <td data-title="Judet">
+                <div class="td-wrapper"><?= $row['nume_judet'] ?></div>
+              </td>
+              <td data-title="IBAN">
+                <div class="td-wrapper"><?= $row['Banca'] ?></div>
+              </td>
+              <td data-title="Banca">
+                <div class="td-wrapper"><?= $row['IBAN'] ?></div>
+              </td>
+              <td data-title="CIF">
+                <div class="td-wrapper"><?= $row['CIF'] ?></div>
+              </td>
+              <td data-title="Actiuni">
+                <div class="td-wrapper">
+                  <a href="manage_providers.php?id=<?= $row['ID'] ?>" class="buttons">Edit</a>
+                  <a href="?remove=<?= $row['ID'] ?>" class="buttons danger" onclick="return confirm('Are you sure you want to delete <?= $row['nume_furnizor'] ?>')">Remove</a>
+                </div>
               </td>
             </tr>
           <?php
@@ -67,7 +83,7 @@ if (isset($_GET['remove']) && $_GET['remove'] != '') {
       </table>
     </div>
   </div>
-
+  <script src="javascript.js" defer></script>
 </body>
 
 </html>

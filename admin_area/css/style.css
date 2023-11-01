@@ -9,7 +9,7 @@ html {
 *,
 *::before,
 *::after {
-  box-sizing: inherit;
+  box-sizing: border-box;
   padding: 0;
   margin: 0;
   text-decoration: none;
@@ -18,18 +18,79 @@ html {
 /* HEADER */
 
 header {
-  display: flex;
   background-color: rgb(30, 30, 35);
-  height: 10vh;
-  align-items: center;
-  justify-content: space-between;
 }
-header h1 {
-  color: aliceblue;
-}
+
 .logo {
-  width: 100px;
-  height: 100px;
+  height: 5rem;
+}
+
+.navigation-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.hamburger {
+  /* position: absolute; */
+  left: 3%;
+  font-size: 2rem;
+  background-color: initial;
+  cursor: pointer;
+  color: #fff;
+  border: none;
+}
+
+header > nav {
+  display: none;
+  min-height: 100vh;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: rgba(30, 30, 35, 1);
+  z-index: 10000;
+  width: 100%;
+}
+
+header > nav > .header-close-btn {
+  position: absolute;
+  right: 0.5rem;
+  top: 0;
+  cursor: pointer;
+  font-size: 2rem;
+  color: white;
+}
+
+header > nav > .header-close-btn .i {
+  padding: 1rem;
+}
+
+header > nav > aside {
+  display: flex !important;
+}
+
+.show-menu {
+  display: block;
+}
+
+header > nav > aside .buttons-container {
+  padding-top: 1rem;
+  width: 100%;
+}
+
+header > nav > aside .buttons-container a {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+aside .buttons-container a {
+  position: relative;
+  text-align: left;
+}
+
+aside .buttons-container a i {
+  position: absolute;
+  right: 1rem;
 }
 
 /* MAIN */
@@ -58,14 +119,13 @@ header h1 {
 }
 
 .sidebar {
-  background-color: darkgrey;
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   align-items: flex-start;
   padding: 20px 20px;
-  min-width: 10%;
-  max-width: 150px;
+  height: 100%;
+  width: 100%;
 }
 .container {
   display: flex;
@@ -87,12 +147,13 @@ header h1 {
   background-color: #008cba;
   border: none;
   color: white;
-  padding: 15px 32px;
+  padding: 1rem;
   text-align: center;
-  display: inline-block;
-  font-size: 16px;
+  /* display: inline-block; */
+  font-size: 1rem;
   border-radius: 12px;
   cursor: pointer;
+  flex-shrink: 1;
 }
 
 .buttons:hover {
@@ -140,31 +201,6 @@ label,
   display: none;
 }
 
-@media all and (min-width: 500px) {
-  .form-box label {
-    display: block;
-  }
-}
-
-@media all and (min-width: 600px) {
-  .form-box {
-    flex-direction: row;
-  }
-  .form-box label {
-    flex-basis: 9rem;
-    flex-grow: 0;
-    flex-shrink: 0;
-  }
-  .form-box .buttons {
-    margin-left: 9rem;
-  }
-  .form-box input,
-  .form-box select,
-  .form-box textarea {
-    flex: 1, 1, 0;
-  }
-}
-
 /* ORDERS */
 
 .orders-wrapper {
@@ -177,42 +213,167 @@ label,
 
 .search_form {
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
+}
+
+.checkbox-container {
+  display: flex;
+  padding: 0.25rem 0;
+}
+
+#categorii {
+  margin-bottom: 0.5rem;
 }
 
 #checkbox-search {
   padding: 12px 15px;
 }
 
-#table_field {
+.page {
+  background-color: #008cba;
+  cursor: pointer;
+  padding: 0 0.5rem;
+  /* margin: 0.75rem 0.15rem; */
+  color: #ccc;
+}
+
+.page.active {
+  background-color: #090dfac7;
+  cursor: default;
+}
+
+.page.inactive {
+  background-color: #5a5a5a;
+  cursor: default;
+}
+
+.pager {
+  display: flex;
+  flex-direction: column;
+}
+
+.pagination,
+.pager-buttons {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.page-numbers {
+  display: flex;
+  gap: 0.25rem;
+  flex-wrap: wrap;
+}
+
+.pager-buttons > a {
+  align-self: center;
+}
+
+#table_field,
+#table_field--wide {
   border-collapse: collapse;
   width: 100%;
   border-radius: 5px 5px 0 0;
-  overflow-x: hidden;
-  overflow-y: scroll;
 }
-#table_field thead tr {
+#table_field thead tr,
+#table_field--wide thead tr {
   background-color: #008cba;
   text-align: left;
   font-weight: bold;
 }
 
-#table_field tbody tr td img {
+#table_field tbody tr td img,
+#table_field--wide tbody tr td img {
   height: 80px;
 }
 
 #table_field th,
-#table_field td {
+#table_field td,
+#table_field--wide th,
+#table_field--wide td {
   padding: 12px 15px;
 }
-#table_field tbody tr {
+#table_field tbody tr,
+#table_field--wide tbody tr {
   border-bottom: 1px solid #dddddd;
 }
 
 .total {
   text-align: end;
 }
+
+.padding-right {
+  padding-right: 0.5rem;
+}
+
+/* new shit */
+
+#table_field,
+#table_field thead,
+#table_field tbody,
+#table_field th,
+#table_field td,
+#table_field tr,
+#table_field--wide,
+#table_field--wide thead,
+#table_field--wide tbody,
+#table_field--wide th,
+#table_field--wide td,
+#table_field--wide tr {
+  display: block;
+}
+
+#table_field thead tr,
+#table_field--wide thead tr {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+}
+
+#table_field tr,
+#table_field--wide tr {
+  border: 1px solid #ccc;
+}
+
+#table_field td,
+#table_field--wide td {
+  position: relative;
+}
+
+#table_field td::before,
+#table_field--wide td::before {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 110px;
+  padding: 8px;
+  text-align: left;
+  white-space: nowrap;
+  content: attr(data-title);
+  text-transform: capitalize;
+  background: #f9f6e0;
+  height: 100%;
+  overflow: hidden;
+}
+
+.no-background:before {
+  background-color: inherit !important;
+}
+
+.td-wrapper {
+  padding-left: 120px;
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 1;
+}
+
+#table_field tbody tr:nth-child(even),
+#table_field--wide tbody tr:nth-child(even) {
+  background: #eee;
+}
+
+/* end new shit */
 
 .modal {
   position: fixed;
@@ -381,4 +542,135 @@ label,
 .add-more-stoc {
   display: flex;
   justify-content: space-between;
+}
+
+@media screen and (min-width: 768px) {
+  .hamburger {
+    display: none;
+  }
+  .navigation-container {
+    justify-content: space-between;
+    padding: 0 2rem;
+  }
+
+  .sidebar {
+    display: block;
+  }
+
+  .sidebar {
+    flex: 0 1 200px;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  #table_field {
+    display: table;
+  }
+
+  #table_field thead {
+    display: table-header-group;
+  }
+
+  #table_field td,
+  #table_field th {
+    display: table-cell;
+  }
+
+  #table_field tr {
+    display: table-row;
+  }
+
+  #table_field tbody {
+    display: table-row-group;
+  }
+
+  #table_field thead tr,
+  #table_field td,
+  #table_field td::before {
+    position: static;
+  }
+
+  #table_field td::before {
+    content: none;
+  }
+
+  #table_field .td-wrapper {
+    padding-left: 0;
+  }
+
+  /* ORDERS */
+
+  .search_form {
+    flex-direction: row;
+  }
+  .search_form > label {
+    padding-left: 0;
+    padding-right: 0;
+    width: min-content;
+  }
+}
+
+@media screen and (min-width: 1260px) {
+  #table_field--wide {
+    display: table;
+  }
+
+  #table_field--wide thead {
+    display: table-header-group;
+  }
+
+  #table_field--wide td,
+  #table_field--wide th {
+    display: table-cell;
+  }
+
+  #table_field--wide tr {
+    display: table-row;
+  }
+
+  #table_field--wide tbody {
+    display: table-row-group;
+  }
+
+  #table_field--wide thead tr,
+  #table_field--wide td,
+  #table_field--wide td::before {
+    position: static;
+  }
+
+  #table_field--wide td::before {
+    content: none;
+  }
+
+  #table_field--wide .td-wrapper {
+    padding-left: 0;
+  }
+}
+
+@media screen and (min-width: 1530px) {
+}
+
+@media all and (min-width: 500px) {
+  .form-box label {
+    display: block;
+  }
+}
+
+@media all and (min-width: 600px) {
+  .form-box {
+    flex-direction: row;
+  }
+  .form-box label {
+    flex-basis: 9rem;
+    flex-grow: 0;
+    flex-shrink: 0;
+  }
+  .form-box .buttons {
+    margin-left: 9rem;
+  }
+  .form-box input,
+  .form-box select,
+  .form-box textarea {
+    flex: 1, 1, 0;
+  }
 }

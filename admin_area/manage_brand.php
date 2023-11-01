@@ -9,16 +9,12 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
   $id = $_GET['id'];
   $q = mysqli_query($con, "SELECT * FROM branduri WHERE ID='$id'");
   $brand_info = mysqli_fetch_assoc($q);
-
   if (isset($_POST['submit'])) {
     $nume = mysqli_real_escape_string($con, $_POST['nume']);
     $site = mysqli_real_escape_string($con, $_POST['site']);
-    $check = mysqli_query($con, "SELECT * FROM branduri WHERE denumire='$nume'");
+    $check = mysqli_query($con, "SELECT * FROM branduri WHERE ID=$brand_info[ID]");
     if (mysqli_num_rows($check) > 0) {
-      echo "<script>alert('Brandul este prezent deja!')</script>";
-      mysqli_query($con, "UPDATE branduri SET website='$site' WHERE ID=$id");
-    } else {
-      mysqli_query($con, "UPDATE branduri SET denumire='$nume',website='$site' WHERE ID=$id");
+      mysqli_query($con, "UPDATE branduri SET website='$site',denumire='$nume',website='$site' WHERE ID=$id");
       header("location:view_brands.php");
     }
   }
@@ -27,12 +23,8 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
     $nume = mysqli_real_escape_string($con, $_POST['nume']);
     $site = mysqli_real_escape_string($con, $_POST['site']);
     $check = mysqli_query($con, "SELECT * FROM branduri WHERE denumire='$nume'");
-    if (mysqli_num_rows($check) > 0) {
-      echo "<script>alert('Brandul este prezent deja!')</script>";
-    } else {
-      mysqli_query($con, "INSERT INTO branduri (denumire,website) VALUES('$nume','$site')");
-      header("location:view_brands.php");
-    }
+    mysqli_query($con, "INSERT INTO branduri (denumire,website) VALUES('$nume','$site')");
+    header("location:view_brands.php");
   }
 }
 ?>
@@ -59,15 +51,15 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
       <form method="post">
         <label for="brand_name">Nume brand</label>
         <input type="text" name="nume" id="brand_name" value="<?php echo (isset($_GET['id']) && $_GET['id'] != '') ? $brand_info['denumire'] : '' ?>">
+        <label for="brand_site">Website</label>
+        <input type="text" name="site" id="brand_site" value="<?php echo (isset($_GET['id']) && $_GET['id'] != '') ? $brand_info['website'] : '' ?>">
         <div class="submit-group">
-          <label for="brand_site">Website</label>
-          <input type="text" name="site" id="brand_site" value="<?php echo (isset($_GET['id']) && $_GET['id'] != '') ? $brand_info['website'] : '' ?>">
-          <div class="submit-group">
-            <input type="submit" name="submit" value="<?php echo (isset($_GET['id']) && $_GET['id'] != '') ? "Actualizeaza" : "Adauga" ?>" class="buttons">
-          </div>
+          <input type="submit" name="submit" value="<?php echo (isset($_GET['id']) && $_GET['id'] != '') ? "Actualizeaza" : "Adauga" ?>" class="buttons">
+        </div>
       </form>
     </div>
   </div>
+  <script src="javascript.js" defer></script>
 </body>
 
 </html>

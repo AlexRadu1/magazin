@@ -1,5 +1,6 @@
 <?php
 include("includes/connect.php");
+include('functions/function.php');
 session_start();
 if (isset($_SESSION['grand_total'])) {
   $grand_total = $_SESSION['grand_total'];

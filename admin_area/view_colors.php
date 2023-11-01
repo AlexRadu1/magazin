@@ -42,11 +42,17 @@ if (isset($_GET['remove']) && $_GET['remove'] != '') {
           while ($row = mysqli_fetch_assoc($q)) {
           ?>
             <tr>
-              <td><?= $row['ID'] ?></td>
-              <td><?= $row['denumire'] ?></td>
-              <td>
-                <a href="manage_colors.php?id=<?= $row['ID'] ?>" class="buttons">Edit</a>
-                <a href="?remove=<?= $row['ID'] ?>" class="buttons danger" onclick="return confirm('Are you sure you want to delete <?= $row['denumire'] ?>')">Remove</a>
+              <td data-title="ID">
+                <div class="td-wrapper"><?= $row['ID'] ?></div>
+              </td>
+              <td data-title="Nume">
+                <div class="td-wrapper"><?= $row['denumire'] ?></div>
+              </td>
+              <td data-title="Actiuni">
+                <div class="td-wrapper">
+                  <a href="manage_colors.php?id=<?= $row['ID'] ?>" class="buttons">Edit</a>
+                  <a href="?remove=<?= $row['ID'] ?>" class="buttons danger" onclick="return confirm('Are you sure you want to delete <?= $row['denumire'] ?>')">Remove</a>
+                </div>
               </td>
             </tr>
           <?php
@@ -56,7 +62,7 @@ if (isset($_GET['remove']) && $_GET['remove'] != '') {
       </table>
     </div>
   </div>
-
+  <script src="javascript.js" defer></script>
 </body>
 
 </html>

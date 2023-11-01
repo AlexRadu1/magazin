@@ -94,6 +94,7 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
       </form>
     </div>
   </div>
+  <script src="javascript.js" defer></script>
 </body>
 
 </html>

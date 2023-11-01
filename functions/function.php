@@ -31,6 +31,7 @@ function popup_card_product()
                 </div>
                 <div class='info'>
                   <h2>$product_title</h2>
+                  <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Et blanditiis, sunt, rem quis quisquam facere obcaecati aperiam corrupti voluptates, exercitationem rerum ipsam consequuntur? Magnam voluptas amet perferendis asperiores ea aliquam.</p>
                   <div class='color-section'>
                     <label for='color-select'>Culoare:</label>
                     <br>
@@ -167,7 +168,6 @@ function get_unique_subcategory()
                 <img src='./admin_area/images/$product_image1' alt='$product_title'>
               </div>
               <div class='info'>
-                
                 <h2>$product_title</h2>
                 <div class='color-section'>
                   <label for='color-select'>Culoare:</label>
@@ -209,25 +209,26 @@ function get_categories()
   while ($category_row_data = mysqli_fetch_assoc($result_categories)) {
     $category_title = $category_row_data['denumire'];
     $category_id = $category_row_data['ID'];
-    echo "<li><a href='index.php?category=$category_id' class='$category_title-btn'><span>$category_title</span>";
+    echo "<li>
+    <div class='sidemenu-row'>
+    <a href='index.php?category=$category_id' class='$category_title-btn'><span>$category_title</span></a>";
     if (isset($_GET['category'])) {
       if ($_GET['category'] === $category_id) {
-        echo "<i class='fas fa-caret-down'></i>";
+        echo "<i class='fas fa-caret-up arrow' ></i></div>";
       } else {
-        echo "<i class='fa-solid fa-caret-left'></i>";
+        echo "<i class='fa-solid fa-caret-down arrow' ></i></div>";
       }
     } elseif (isset($_GET['subcategory'])) {
       $query = mysqli_query($con, "SELECT * FROM subcategorii WHERE ID={$_GET['subcategory']}");
       $row = mysqli_fetch_assoc($query);
       if ($category_id === $row['cod_categorie']) {
-        echo "<i class='fas fa-caret-down'></i>";
+        echo "<i class='fas fa-caret-up arrow' ></i></div>";
       } else {
-        echo "<i class='fa-solid fa-caret-left'></i>";
+        echo "<i class='fa-solid fa-caret-down arrow' ></i></div>";
       }
     } else {
-      echo "<i class='fa-solid fa-caret-left'></i>";
+      echo "<i class='fa-solid fa-caret-down arrow' ></i></div>";
     }
-    echo "</a>";
     get_subcategories($category_id);
     echo "</li>";
   }
@@ -348,56 +349,70 @@ function view_more()
     $product_image1 = $row['produs_imagine1'];
     $product_price  = $row['pret'];
     $product_brand = $row['nume_brand'];
+    $product_brand_website = $row['website'];
     $product_category = $row['nume_categorie'];
     $product_subcategory = $row['nume_subcategorie'];
     $data_id = 1;
     echo "
     <div class = 'card-wrapper'>
-          <div class='card'>
-            <div class='product-imgs'>
-              <div class='img-display'>
-                <div class='img-showcase'>
-                  <img src = 'admin_area/images/$product_image1'>";
+      <div class='card'>
+        <div class='product-imgs'>
+          <div class='img-display'>
+            <div class='img-showcase'>
+                <img src = 'admin_area/images/$product_image1'>";
     foreach ($img_array as $image) {
       echo "<img src = 'admin_area/images/$image'>";
     }
     echo "
-                </div>
-              </div>
-              <div class='img-select'>
-                <div class = 'img-item'>
-                  <a href = '#' data-id = '$data_id'>
-                    <img src = 'admin_area/images/$product_image1' >
-                  </a>
-                </div>";
+            </div>
+          </div>
+          <div class='img-select'>
+            <button class='handle left-handle'>
+              <div class='text'>&#8249;</div>
+            </button>
+            <div class='slider'>
+            <div class = 'img-item'>
+              <a href = '#' data-id = '$data_id'>
+                <img src = 'admin_area/images/$product_image1' >
+              </a>
+            </div>";
     foreach ($img_array as $image) {
       $data_id += 1;
       echo "
-      <div class = 'img-item'>
-      <a href = '#' data-id = '$data_id'>
-                    <img src = 'admin_area/images/$image' >
-                  </a></div>";
+            <div class = 'img-item'>
+              <a href = '#' data-id = '$data_id'>
+                <img src = 'admin_area/images/$image' >
+              </a>
+            </div>";
     }
     echo "
-                
-              </div>
             </div>
-            <form class='product-content' method='post'>
-              <h2>$product_title</h2>
-              <a href = '#' class = 'product-link'>Visit $product_brand store</a>
-              <div class = 'product-price'>
-                <p class = 'new-price'>Price: <span>$product_price <small>lei</small></span></p>
+            <button class='handle right-handle'>
+              <div class='text'>&#8250;</div>
+            </button>
+          </div>
+          <div class='progress-bar-container'>
+              <div class='progress-bar'>
               </div>
-              <div class = 'product-detail'>
-              <h2>about this item: </h2>
-              <p>Category: $product_category($product_subcategory)</p>
-              <p>$product_description</p>
-              <ul class='ulist'>
-                <li>
-                  <div class='color-section'>
-                    <label for='color-select'>Culoare:</label>
-                    <input type='hidden' name='product_id' value='$product_id' class='product-id'>
-                    <select name='txt_color' class='color-select' id='color-select' required><option value='' disabled selected>Select culoare</option>";
+          </div>
+        </div>
+        <form class='product-content' method='post'>
+          <h2 class='product-title'>$product_title</h2>
+          <a href = '$product_brand_website'  target=blank_ class = 'product-link'>Visit $product_brand store</a>
+          <div class = 'product-price'>
+            <p class = 'new-price'>Price: <span>$product_price <small>lei</small></span>
+            </p>
+          </div>
+          <div class = 'product-detail'>
+            <h2>about this item: </h2>
+            <p>Category: $product_category($product_subcategory)</p>
+            <p>$product_description</p>
+            <ul class='ulist'>
+              <li>
+                <div class='color-section'>
+                  <label for='color-select'>Culoare:</label>
+                  <input type='hidden' name='product_id' value='$product_id' class='product-id'>
+                  <select name='txt_color' class='color-select' id='color-select' required><option value='' disabled selected>Select culoare</option>";
     $select_attr_query = "SELECT * FROM atribute_produs INNER JOIN culori ON atribute_produs.cod_culoare=culori.ID WHERE cod_produs=$product_id GROUP BY(cod_culoare)";
     $result_attr_query = mysqli_query($con, $select_attr_query);
     while ($row_1 = mysqli_fetch_assoc($result_attr_query)) {
@@ -406,26 +421,25 @@ function view_more()
       echo "<option value='$color_id'>$color_title</option>";
     }
     echo "      
-                    </select>
-                  </div>
-                </li>
-                <li>
-                  <div class='size-section'>
-                    <label for='size-select$product_id'>Size:</label>
-                    <select name='txt_size' class='size-select' id='size-select$product_id' required>
-                      <option value=''>Select size</option>
-                    </select>
-                  </div>
-                  </li>
-                </ul>
-            </div>
-            <div class = 'purchase-info'>
-              <input type = 'number' name='product_quantity'  min = '1' value = '1'>
-              <input type='submit' class='add-cart-btn' name='add_to_cart' value='Add to cart'>
-            </div> 
-
-          </form>
-        </div>
-        </div>";
+                  </select>
+                </div>
+              </li>
+              <li>
+                <div class='size-section'>
+                  <label for='size-select$product_id'>Size:</label>
+                  <select name='txt_size' class='size-select' id='size-select$product_id' required>
+                    <option value=''>Select size</option>
+                  </select>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class = 'purchase-info'>
+            <input type = 'number' name='product_quantity'  min = '1' value = '1'>
+            <input type='submit' class='add-cart-btn' name='add_to_cart' value='Add to cart'>
+          </div> 
+        </form>
+      </div>
+    </div>";
   }
 }

@@ -24,10 +24,9 @@ if (!isset($_SESSION['admin']) && !$_SESSION['admin']) {
   <?php include("includes/header.php") ?>
   <div class="wrapper">
     <?php include("includes/sidebar.php") ?>
-    <div class="container">
-    </div>
+    <div class="container content"></div>
   </div>
-
+  <script src="javascript.js" defer></script>
 </body>
 
 </html>

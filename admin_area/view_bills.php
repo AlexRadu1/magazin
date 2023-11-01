@@ -53,12 +53,24 @@ INNER JOIN furnizori f ON c.cod_furnizor=f.ID
               while ($row = mysqli_fetch_assoc($bills_query)) {
               ?>
                 <tr>
-                  <td><?= $row['cod_fact'] ?></td>
-                  <td><?php echo "" . $row['data'] . " " ?></td>
-                  <td><?= $row['serie'] . $row['nr'] ?> </td>
-                  <td><?= $row['denumire'] ?></td>
-                  <td><?= $row['pret_total'] ?></td>
-                  <td><a href="bills_details.php?id_factura=<?= $row['cod_fact'] ?>" class="buttons">Detalii</a></td>
+                  <td data-title="ID">
+                    <div class="td-wrapper"><?= $row['cod_fact'] ?></div>
+                  </td>
+                  <td data-title="Data">
+                    <div class="td-wrapper"><?php echo "" . $row['data'] . " " ?></div>
+                  </td>
+                  <td data-title="Serie/Nr">
+                    <div class="td-wrapper"><?= $row['serie'] . $row['nr'] ?> </div>
+                  </td>
+                  <td data-title="Furnizor">
+                    <div class="td-wrapper"><?= $row['denumire'] ?>
+                  </td>
+                  <td data-title="Pret total factura">
+                    <div class="td-wrapper"><?= $row['pret_total'] ?></div>
+                  </td>
+                  <td data-title="Produse">
+                    <div class="td-wrapper"><a href="bills_details.php?id_factura=<?= $row['cod_fact'] ?>" class="buttons">Detalii</a></div>
+                  </td>
                 </tr>
             <?php }
             } ?>
@@ -67,6 +79,7 @@ INNER JOIN furnizori f ON c.cod_furnizor=f.ID
       </div>
     </div>
   </div>
+  <script src="javascript.js" defer></script>
 </body>
 
 </html>
