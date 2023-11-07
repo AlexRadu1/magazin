@@ -96,7 +96,6 @@
   </div>
   <form action="search_product.php" method="get" style="display: none;" class="search-bar">
     <input class="search" placeholder="Cauta" type="search" aria-label="Search" name="search_data">
-    <!-- <button type="submit" name="search_data_product" class="search-button"><i class="fa fa-search" aria-hidden="true"></i></button> -->
   </form>
 </header>
 <header class="header-large">

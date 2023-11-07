@@ -265,7 +265,13 @@ function search_product()
   global $con;
   if (isset($_GET['search_data'])) {
     $search_data_value = $_GET['search_data'];
-    $search_query = "SELECT * FROM `produse` WHERE keywords LIKE '%$search_data_value%'";
+    $search = explode(" ", $search_data_value);
+    $condition =  "";
+    foreach ($search as $text) {
+      $condition .= " keywords LIKE '%$text%' OR ";
+    }
+    $condition = substr($condition, 0, -4);
+    $search_query = "SELECT * FROM `produse` WHERE $condition";
     $result_query = mysqli_query($con, $search_query);
     $number_of_rows = mysqli_num_rows($result_query);
     if ($number_of_rows == 0) {

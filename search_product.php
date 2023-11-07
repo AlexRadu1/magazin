@@ -84,23 +84,34 @@ if (isset($_GET['logout'])) {
 <body>
   <?php include('includes/header.php') ?>
   <section id="main">
-    <nav class="sidebar">
-      <div class="text">
-        Categorii
-      </div>
-      <ul>
-        <?php
-        get_categories();
-        ?>
-      </ul>
-    </nav>
-    <div class="products">
-      <div class="cards-container">
-        <?php
-        search_product();
-        get_unique_category_products();
-        get_unique_subcategory();
-        ?>
+    <div class="container">
+      <?php
+      if (isset($message)) {
+        foreach ($message as $message) {
+          echo "<div class='message' onclick='this.remove();'>" . $message . "</div>";
+        }
+      }
+      ?>
+      <div class="main-wrapper">
+        <nav class="sidebar">
+          <div class="text">
+            Categorii
+          </div>
+          <ul>
+            <?php
+            get_categories();
+            ?>
+          </ul>
+        </nav>
+        <div class="products-container">
+          <div class="cards-container">
+            <?php
+            search_product();
+            get_unique_category_products();
+            get_unique_subcategory();
+            ?>
+          </div>
+        </div>
       </div>
     </div>
   </section>

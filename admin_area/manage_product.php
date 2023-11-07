@@ -13,6 +13,8 @@ $attrProd = array();
 if (isset($_GET['pi']) && $_GET['pi'] > 0) {
   $pi = mysqli_real_escape_string($con, $_GET['pi']);
   $delete_sql = "delete from imagini where id='$pi'";
+  $path = mysqli_fetch_assoc(mysqli_query($con, "SELECT `path` FROM imagini WHERE id='$pi'"));
+  unlink("images/$path[path]");
   mysqli_query($con, $delete_sql);
 }
 
@@ -54,7 +56,9 @@ if (isset($_POST['submit'])) {
       if ($_FILES['image']['name'] != '') {
         $product_image = rand(111111111, 999999999) . '_' . $_FILES['image']['name'];
         move_uploaded_file($_FILES['image']['tmp_name'], "images/$product_image");
-        $update_sql = "UPDATE produse SET denumire='$title',cod_brand='$brand_id',cod_categorie='$category_id',pret='$price',descriere='$description',keywords='$keywords',cod_subcategorie='$subcategory_id',produs_imagine1=$product_image WHERE ID=$id";
+        $path = mysqli_fetch_assoc(mysqli_query($con, "SELECT produs_imagine1 FROM produse WHERE id='$id'"));
+        unlink("images/$path[produs_imagine1]");
+        $update_sql = "UPDATE produse SET denumire='$title',cod_brand='$brand_id',cod_categorie='$category_id',pret='$price',descriere='$description',keywords='$keywords',cod_subcategorie='$subcategory_id',produs_imagine1='$product_image' WHERE ID=$id";
       } else {
         $update_sql = "UPDATE produse SET denumire='$title',cod_brand='$brand_id',cod_categorie='$category_id',pret='$price',descriere='$description',keywords='$keywords',cod_subcategorie='$subcategory_id' WHERE ID='$id'";
       }
