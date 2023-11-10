@@ -1,6 +1,4 @@
 <?php
-include('./includes/connect.php');
-
 
 function popup_card_product()
 {
